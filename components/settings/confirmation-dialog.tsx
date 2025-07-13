@@ -63,9 +63,7 @@ export function ConfirmationDialog({
             <Button variant="outline" onClick={() => setOpen(false)}>
               {cancelText}
             </Button>
-            <Button variant="destructive" onClick={handleConfirm}>
-              {confirmText}
-            </Button>
+            <Button onClick={handleConfirm}>{confirmText}</Button>
           </div>
         </DialogContent>
       </Dialog>
@@ -84,9 +82,7 @@ export function ConfirmationDialog({
           <DrawerClose asChild>
             <Button variant="outline">{cancelText}</Button>
           </DrawerClose>
-          <Button variant="destructive" onClick={handleConfirm}>
-            {confirmText}
-          </Button>
+          <Button onClick={handleConfirm}>{confirmText}</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

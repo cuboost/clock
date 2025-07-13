@@ -1,5 +1,7 @@
 import Dexie, { Table } from "dexie";
 
+export type BackgroundType = "image" | "color" | "gradient";
+
 export interface ClockSettings {
   id: string;
   showSeconds: boolean;
@@ -8,6 +10,8 @@ export interface ClockSettings {
   showDate: boolean;
   showTimeInTab: boolean;
   customTabTitle: string;
+  backgroundType: BackgroundType;
+  backgroundValue: string;
 }
 
 class ClockAppDB extends Dexie {

@@ -11,7 +11,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useClockSettings } from "@/context/clock-settings-context";
+import { BackgroundType } from "@/lib/db";
 import { Settings2 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ConfirmationDialog } from "./confirmation-dialog";
 import { SettingsSwitch } from "./settings-switch";
 
@@ -82,12 +84,48 @@ export function SettingsSheet() {
           )}
 
           <h3>Background</h3>
-          <div className="grid gap-3">
-            <Label htmlFor="image-link">Image Link</Label>
-            <Input
-              id="image-link"
-              placeholder="https://example.com/image.png"
-            />
+          <div className="flex w-full max-w-sm flex-col gap-6">
+            <Tabs
+              value={settings.backgroundType}
+              onValueChange={(value) =>
+                updateSetting("backgroundType", value as BackgroundType)
+              }
+            >
+              <TabsList className="w-full">
+                <TabsTrigger value="color">Solid Color</TabsTrigger>
+                <TabsTrigger value="gradient">Gradient</TabsTrigger>
+                <TabsTrigger value="image">Image</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="color">
+                <Label htmlFor="background-color">Background Color</Label>
+                <input
+                  type="color"
+                  id="background-color"
+                  value={settings.backgroundValue}
+                  onChange={(e) =>
+                    updateSetting("backgroundValue", e.target.value)
+                  }
+                  className="h-10 w-10 p-0 border-none rounded-full cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-offset-2 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch-wrapper]:p-0"
+                />
+              </TabsContent>
+
+              <TabsContent value="gradient"></TabsContent>
+
+              <TabsContent value="image">
+                <div className="grid gap-3">
+                  <Label htmlFor="image-link">Image Link</Label>
+                  <Input
+                    id="image-link"
+                    value={settings.backgroundValue}
+                    onChange={(e) =>
+                      updateSetting("backgroundValue", e.target.value)
+                    }
+                    placeholder="https://example.com/image.png"
+                  />
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
 
           <h3>Reset</h3>
@@ -95,7 +133,7 @@ export function SettingsSheet() {
           <ConfirmationDialog
             title="Reset Settings?"
             description="This action is irreversible and will remove all your custom settings stored locally on this device."
-            trigger={<Button variant="destructive">Reset to Defaults</Button>}
+            trigger={<Button>Reset to Defaults</Button>}
             onConfirm={() => {
               resetSettings();
             }}

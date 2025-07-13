@@ -11,6 +11,8 @@ const DEFAULT_SETTINGS: ClockSettings = {
   showDate: false,
   showTimeInTab: true,
   customTabTitle: "Clock",
+  backgroundType: "color",
+  backgroundValue: "#1e293b",
 };
 
 type ClockSettingsContextType = {
