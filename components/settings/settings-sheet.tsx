@@ -5,19 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useClockSettings } from "@/context/clock-settings-context";
 import { Settings2 } from "lucide-react";
+import { ConfirmationDialog } from "./confirmation-dialog";
 import { SettingsSwitch } from "./settings-switch";
 
 export function SettingsSheet() {
-  const { settings, updateSetting, loading } = useClockSettings();
+  const { settings, updateSetting, loading, resetSettings } =
+    useClockSettings();
 
   if (loading) return null;
   return (
@@ -28,11 +28,11 @@ export function SettingsSheet() {
           Settings
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="overflow-scroll">
         <SheetHeader>
           <SheetTitle>Settings</SheetTitle>
         </SheetHeader>
-        <div className="grid flex-1 auto-rows-min gap-6 px-4">
+        <div className="grid flex-1 auto-rows-min gap-6 px-5 mb-4">
           <h3>Elements</h3>
           <SettingsSwitch
             id="show-seconds"
@@ -61,6 +61,26 @@ export function SettingsSheet() {
             onChange={(value) => updateSetting("showAmPm", value)}
           />
 
+          <h3>Tab</h3>
+          <SettingsSwitch
+            id="show-time-in-tab"
+            label="Show Time in Tab"
+            checked={settings.showTimeInTab}
+            onChange={(value) => updateSetting("showTimeInTab", value)}
+          />
+          {!settings.showTimeInTab && (
+            <div className="grid gap-3">
+              <Label htmlFor="custom-tab-title">Custom Tab Title</Label>
+              <Input
+                id="custom-tab-title"
+                value={settings.customTabTitle ?? ""}
+                onChange={(e) =>
+                  updateSetting("customTabTitle", e.target.value)
+                }
+              />
+            </div>
+          )}
+
           <h3>Background</h3>
           <div className="grid gap-3">
             <Label htmlFor="image-link">Image Link</Label>
@@ -69,12 +89,19 @@ export function SettingsSheet() {
               placeholder="https://example.com/image.png"
             />
           </div>
+
+          <h3>Reset</h3>
+          <p>Remove all your custom settings stored locally on this device.</p>
+          <ConfirmationDialog
+            title="Reset Settings?"
+            description="This action is irreversible and will remove all your custom settings stored locally on this device."
+            trigger={<Button variant="destructive">Reset to Defaults</Button>}
+            onConfirm={() => {
+              resetSettings();
+            }}
+            confirmText="Reset"
+          />
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button>Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

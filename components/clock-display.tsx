@@ -1,11 +1,33 @@
 "use client";
 
-import { useClockSettings } from "@/context/clock-settings-context";
+import { useEffect } from "react";
 import { useClock } from "@/hooks/use-clock";
+import { useClockSettings } from "@/context/clock-settings-context";
 
 export function ClockDisplay() {
   const time = useClock();
   const { settings, loading } = useClockSettings();
+
+  useEffect(() => {
+    if (loading) {
+      document.title = "...";
+      return;
+    }
+
+    if (settings.showTimeInTab) {
+      const timeString = settings.twelveHourFormat
+        ? `${time.amPmHours}:${time.minutes}${
+            settings.showSeconds ? `:${time.seconds}` : ""
+          }${settings.showAmPm ? ` ${time.amPm}` : ""}`
+        : `${time.hours}:${time.minutes}${
+            settings.showSeconds ? `:${time.seconds}` : ""
+          }`;
+
+      document.title = timeString;
+    } else {
+      document.title = settings.customTabTitle || "Clock";
+    }
+  }, [time, settings, loading]);
 
   if (loading) return null;
 

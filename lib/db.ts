@@ -6,6 +6,8 @@ export interface ClockSettings {
   twelveHourFormat: boolean;
   showAmPm: boolean;
   showDate: boolean;
+  showTimeInTab: boolean;
+  customTabTitle: string;
 }
 
 class ClockAppDB extends Dexie {

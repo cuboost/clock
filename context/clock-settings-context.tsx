@@ -9,6 +9,8 @@ const DEFAULT_SETTINGS: ClockSettings = {
   twelveHourFormat: true,
   showAmPm: true,
   showDate: false,
+  showTimeInTab: true,
+  customTabTitle: "Clock",
 };
 
 type ClockSettingsContextType = {
@@ -18,6 +20,7 @@ type ClockSettingsContextType = {
     value: ClockSettings[K]
   ) => void;
   loading: boolean;
+  resetSettings: () => void;
 };
 
 const ClockSettingsContext = createContext<ClockSettingsContextType | null>(
@@ -55,8 +58,15 @@ export function ClockSettingsProvider({
     await db.settings.put(updated);
   };
 
+  const resetSettings = async () => {
+    setSettings(DEFAULT_SETTINGS); // update local state
+    await db.settings.put(DEFAULT_SETTINGS); // update Dexie
+  };
+
   return (
-    <ClockSettingsContext.Provider value={{ settings, updateSetting, loading }}>
+    <ClockSettingsContext.Provider
+      value={{ settings, updateSetting, loading, resetSettings }}
+    >
       {children}
     </ClockSettingsContext.Provider>
   );

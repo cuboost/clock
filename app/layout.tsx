@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cuboost Clock",
+  title: "Clock",
   description: "Cuboost Clock, a simple customizable clock...",
 };
 
