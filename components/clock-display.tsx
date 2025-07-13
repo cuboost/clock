@@ -9,6 +9,10 @@ export function ClockDisplay() {
   const { settings, loading } = useClockSettings();
 
   useEffect(() => {
+    document.documentElement.setAttribute("data-theme", settings.theme);
+  }, [settings.theme]);
+
+  useEffect(() => {
     if (loading) {
       document.title = "...";
       return;

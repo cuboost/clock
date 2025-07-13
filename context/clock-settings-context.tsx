@@ -13,6 +13,7 @@ const DEFAULT_SETTINGS: ClockSettings = {
   customTabTitle: "Clock",
   backgroundType: "color",
   backgroundValue: "#1e293b",
+  theme: "default",
 };
 
 type ClockSettingsContextType = {

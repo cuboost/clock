@@ -1,6 +1,15 @@
 import Dexie, { Table } from "dexie";
 
 export type BackgroundType = "image" | "color" | "gradient";
+export type ThemeType =
+  | "default"
+  | "red"
+  | "rose"
+  | "orange"
+  | "green"
+  | "blue"
+  | "yellow"
+  | "violet";
 
 export interface ClockSettings {
   id: string;
@@ -12,6 +21,7 @@ export interface ClockSettings {
   customTabTitle: string;
   backgroundType: BackgroundType;
   backgroundValue: string;
+  theme: ThemeType;
 }
 
 class ClockAppDB extends Dexie {
