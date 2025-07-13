@@ -16,6 +16,7 @@ import { Settings2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ConfirmationDialog } from "./confirmation-dialog";
 import { SettingsSwitch } from "./settings-switch";
+import { ThemeToggle } from "../theme/theme-toggle";
 
 export function SettingsSheet() {
   const { settings, updateSetting, loading, resetSettings } =
@@ -82,6 +83,9 @@ export function SettingsSheet() {
               />
             </div>
           )}
+
+          <h3>Theme</h3>
+          <ThemeToggle />
 
           <h3>Background</h3>
           <div className="flex w-full max-w-sm flex-col gap-6">
