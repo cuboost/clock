@@ -132,6 +132,7 @@
   h5 {
     @apply text-base md:text-base;
   }
+
   h6 {
     @apply text-sm md:text-sm;
   }
@@ -141,7 +142,7 @@
   }
 
   p {
-    @apply leading-relaxed dark:text-green-100;
+    @apply leading-relaxed;
   }
 }
 
