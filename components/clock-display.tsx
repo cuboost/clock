@@ -1,40 +1,15 @@
-"use client";
-
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useClock } from "@/hooks/use-clock";
+import { useTabTitle } from "@/hooks/use-tab-title";
+import { useThemeColor } from "@/hooks/use-theme-color";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
-import { useEffect } from "react";
 
 export function ClockDisplay() {
   const time = useClock();
   const { settings, loading } = useClockSettings();
-  const { resolvedTheme } = useTheme();
+  const clockColor = useThemeColor("clock");
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", settings.theme);
-  }, [settings.theme]);
-
-  useEffect(() => {
-    if (loading) {
-      document.title = "...";
-      return;
-    }
-
-    if (settings.showTimeInTab) {
-      const timeString = settings.twelveHourFormat
-        ? `${time.amPmHours}:${time.minutes}${
-            settings.showSeconds ? `:${time.seconds}` : ""
-          }${settings.showAmPm ? ` ${time.amPm}` : ""}`
-        : `${time.hours}:${time.minutes}${
-            settings.showSeconds ? `:${time.seconds}` : ""
-          }`;
-
-      document.title = timeString;
-    } else {
-      document.title = settings.customTabTitle || "Clock";
-    }
-  }, [time, settings, loading]);
+  useTabTitle();
 
   if (loading) return null;
 
@@ -48,10 +23,7 @@ export function ClockDisplay() {
       }}
       className="flex h-full w-full items-center justify-center"
       style={{
-        color:
-          resolvedTheme == "light"
-            ? settings.clockColorValues.light
-            : settings.clockColorValues.dark,
+        color: clockColor,
       }}
     >
       <h1 className="text-5xl tracking-widest select-none">

@@ -19,16 +19,22 @@ import ColorInput from "./color-input";
 import { ConfirmationDialog } from "./confirmation-dialog";
 import SliderInput from "./slider-input";
 import { SwitchInput } from "./switch-input";
+import { useThemeColor } from "@/hooks/use-theme-color";
 
 export function SettingsSheet() {
   const { settings, updateSetting, loading, resetSettings } =
     useClockSettings();
+  const settingsColor = useThemeColor("clock");
 
   if (loading) return null;
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={"ghost"} className="absolute right-4 bottom-4">
+        <Button
+          variant={"ghost"}
+          className="absolute right-4 bottom-4"
+          style={{ color: settingsColor }}
+        >
           <Settings2 className="h-10 w-10" />
           Settings
         </Button>
