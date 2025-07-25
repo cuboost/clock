@@ -20,8 +20,25 @@ export interface ClockSettings {
   showTimeInTab: boolean;
   customTabTitle: string;
   backgroundType: BackgroundType;
-  backgroundValue: string;
+  backgroundColorValues: {
+    light: string;
+    dark: string;
+  };
+  backgroundGradientValues: {
+    light: string;
+    dark: string;
+  };
+  backgroundImageLink: string;
+  backgroundImageBlur: number;
+  backgroundImageBrightness: number;
+  backgroundImageContrast: number;
+  backgroundImageGrayscale: number;
+  backgroundCustomValue: string;
   theme: ThemeType;
+  clockPosition: {
+    x: number;
+    y: number;
+  };
 }
 
 class ClockAppDB extends Dexie {

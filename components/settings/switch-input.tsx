@@ -10,7 +10,7 @@ type SettingsSwitchProps = {
   onChange: (value: boolean) => void;
 };
 
-export function SettingsSwitch({
+export function SwitchInput({
   id,
   label,
   checked,

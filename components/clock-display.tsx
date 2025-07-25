@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import { useClock } from "@/hooks/use-clock";
 import { useClockSettings } from "@/context/clock-settings-context";
+import { useClock } from "@/hooks/use-clock";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 export function ClockDisplay() {
   const time = useClock();
@@ -36,7 +37,15 @@ export function ClockDisplay() {
   if (loading) return null;
 
   return (
-    <div>
+    <motion.div
+      layout
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+      }}
+      className="w-full h-full flex items-center justify-center"
+    >
       <h1 className="select-none text-5xl tracking-widest">
         {settings.twelveHourFormat ? time.amPmHours : time.hours}:{time.minutes}
         {settings.showSeconds && `:${time.seconds}`}
@@ -48,6 +57,6 @@ export function ClockDisplay() {
           {time.day}/{time.month}/{time.year}
         </h2>
       )}
-    </div>
+    </motion.div>
   );
 }

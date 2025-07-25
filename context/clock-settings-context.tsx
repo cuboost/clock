@@ -12,8 +12,25 @@ const DEFAULT_SETTINGS: ClockSettings = {
   showTimeInTab: true,
   customTabTitle: "Clock",
   backgroundType: "color",
-  backgroundValue: "#1e293b",
+  backgroundColorValues: {
+    light: "#ffffff",
+    dark: "#000000",
+  },
+  backgroundGradientValues: {
+    light: "#ffffff",
+    dark: "#000000",
+  },
+  backgroundImageLink: "",
+  backgroundCustomValue: "",
+  backgroundImageBlur: 10,
+  backgroundImageBrightness: 1,
+  backgroundImageContrast: 1,
+  backgroundImageGrayscale: 0,
   theme: "default",
+  clockPosition: {
+    x: 0,
+    y: 0,
+  },
 };
 
 type ClockSettingsContextType = {
