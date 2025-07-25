@@ -11,6 +11,10 @@ const DEFAULT_SETTINGS: ClockSettings = {
   showDate: false,
   showTimeInTab: true,
   customTabTitle: "Clock",
+  clockColorValues: {
+    light: "#000000",
+    dark: "#ffffff",
+  },
   backgroundType: "color",
   backgroundColorValues: {
     light: "#ffffff",
@@ -28,8 +32,8 @@ const DEFAULT_SETTINGS: ClockSettings = {
   backgroundImageGrayscale: 0,
   theme: "default",
   clockPosition: {
-    x: 0,
-    y: 0,
+    x: "center",
+    y: "center",
   },
 };
 

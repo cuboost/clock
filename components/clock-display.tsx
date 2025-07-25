@@ -3,11 +3,13 @@
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useClock } from "@/hooks/use-clock";
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
 import { useEffect } from "react";
 
 export function ClockDisplay() {
   const time = useClock();
   const { settings, loading } = useClockSettings();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", settings.theme);
@@ -45,6 +47,12 @@ export function ClockDisplay() {
         damping: 20,
       }}
       className="flex h-full w-full items-center justify-center"
+      style={{
+        color:
+          resolvedTheme == "light"
+            ? settings.clockColorValues.light
+            : settings.clockColorValues.dark,
+      }}
     >
       <h1 className="text-5xl tracking-widest select-none">
         {settings.twelveHourFormat ? time.amPmHours : time.hours}:{time.minutes}

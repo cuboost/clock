@@ -1,6 +1,8 @@
 import Dexie, { Table } from "dexie";
 
 export type BackgroundType = "image" | "color" | "gradient";
+export type ClockPositionXType = "left" | "center" | "right";
+export type ClockPositionYType = "top" | "center" | "bottom";
 export type ThemeType =
   | "default"
   | "red"
@@ -19,6 +21,10 @@ export interface ClockSettings {
   showDate: boolean;
   showTimeInTab: boolean;
   customTabTitle: string;
+  clockColorValues: {
+    light: string;
+    dark: string;
+  };
   backgroundType: BackgroundType;
   backgroundColorValues: {
     light: string;
@@ -36,8 +42,8 @@ export interface ClockSettings {
   backgroundCustomValue: string;
   theme: ThemeType;
   clockPosition: {
-    x: number;
-    y: number;
+    x: ClockPositionXType;
+    y: ClockPositionYType;
   };
 }
 

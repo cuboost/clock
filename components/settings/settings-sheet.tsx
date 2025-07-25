@@ -89,6 +89,32 @@ export function SettingsSheet() {
           <h3>Theme</h3>
           <ThemeToggle />
 
+          <h3>Clock Color</h3>
+          <div className="flex justify-evenly">
+            <ColorInput
+              id="clock-color-light"
+              label="Light Theme Color"
+              value={settings.clockColorValues.light}
+              onValueChange={(value) =>
+                updateSetting("clockColorValues", {
+                  light: value,
+                  dark: settings.clockColorValues.dark,
+                })
+              }
+            />
+            <ColorInput
+              id="clock-color-dark"
+              label="Dark Theme Color"
+              value={settings.clockColorValues.dark}
+              onValueChange={(value) =>
+                updateSetting("clockColorValues", {
+                  light: settings.clockColorValues.light,
+                  dark: value,
+                })
+              }
+            />
+          </div>
+
           <h3>Background</h3>
           <div className="flex w-full max-w-sm flex-col gap-6">
             <Tabs
