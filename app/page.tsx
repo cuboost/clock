@@ -26,22 +26,22 @@ export default function Clock() {
           backgroundPosition: "center",
         }
       : settings.backgroundType === "gradient"
-      ? { backgroundImage: settings.backgroundColorValues.light }
-      : settings.backgroundType === "color"
-      ? {
-          backgroundColor:
-            resolvedTheme == "light"
-              ? settings.backgroundColorValues.light
-              : settings.backgroundColorValues.dark,
-        }
-      : {
-          backgroundColor: "#ffffff", // fallback
-        };
+        ? { backgroundImage: settings.backgroundColorValues.light }
+        : settings.backgroundType === "color"
+          ? {
+              backgroundColor:
+                resolvedTheme == "light"
+                  ? settings.backgroundColorValues.light
+                  : settings.backgroundColorValues.dark,
+            }
+          : {
+              backgroundColor: "#ffffff", // fallback
+            };
 
   return (
     <div style={backgroundStyle} className="h-dvh w-full">
       <main
-        className="flex flex-col gap-3 items-center justify-center h-full p-10 text-center w-full"
+        className="flex h-full w-full flex-col items-center justify-center gap-3 p-10 text-center"
         style={{
           backdropFilter: `blur(${settings.backgroundImageBlur}px) brightness(${settings.backgroundImageBrightness}) contrast(${settings.backgroundImageContrast}) grayscale(${settings.backgroundImageGrayscale})`,
         }}

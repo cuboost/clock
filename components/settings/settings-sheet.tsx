@@ -37,7 +37,7 @@ export function SettingsSheet() {
         <SheetHeader>
           <SheetTitle>Settings</SheetTitle>
         </SheetHeader>
-        <div className="grid flex-1 auto-rows-min gap-6 px-5 mb-4">
+        <div className="mb-4 grid flex-1 auto-rows-min gap-6 px-5">
           <h3>Elements</h3>
           <SwitchInput
             id="show-seconds"
@@ -97,7 +97,7 @@ export function SettingsSheet() {
                 updateSetting("backgroundType", value as BackgroundType)
               }
             >
-              <TabsList className="w-full mb-3">
+              <TabsList className="mb-3 w-full">
                 <TabsTrigger value="color">Solid Color</TabsTrigger>
                 <TabsTrigger value="gradient">Gradient</TabsTrigger>
                 <TabsTrigger value="image">Image</TabsTrigger>

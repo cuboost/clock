@@ -44,16 +44,16 @@ export function ClockDisplay() {
         stiffness: 300,
         damping: 20,
       }}
-      className="w-full h-full flex items-center justify-center"
+      className="flex h-full w-full items-center justify-center"
     >
-      <h1 className="select-none text-5xl tracking-widest">
+      <h1 className="text-5xl tracking-widest select-none">
         {settings.twelveHourFormat ? time.amPmHours : time.hours}:{time.minutes}
         {settings.showSeconds && `:${time.seconds}`}
         {settings.showAmPm && ` ${time.amPm}`}
       </h1>
 
       {settings.showDate && (
-        <h2 className="tracking-wider text-xl">
+        <h2 className="text-xl tracking-wider">
           {time.day}/{time.month}/{time.year}
         </h2>
       )}

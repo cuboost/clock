@@ -23,15 +23,15 @@ export default function SliderInput({
   defaultValue = 0,
 }: SliderInputProps) {
   return (
-    <div className="flex justify-center items-center gap-3 w-full">
+    <div className="flex w-full items-center justify-center gap-3">
       <Label
         htmlFor={id}
-        className="bg-muted rounded-full p-2 cursor-pointer hover:bg-muted/80 transition-colors"
+        className="bg-muted hover:bg-muted/80 cursor-pointer rounded-full p-2 transition-colors"
         onClick={() => onValueChange(defaultValue)}
       >
         {icon}
       </Label>
-      <div className="grid gap-3 w-full">
+      <div className="grid w-full gap-3">
         <Label htmlFor={id}>{label}</Label>
         <Slider
           id={id}

@@ -138,7 +138,7 @@
   }
 
   body {
-    @apply text-sm md:text-base tracking-wide;
+    @apply text-sm tracking-wide md:text-base;
   }
 
   p {

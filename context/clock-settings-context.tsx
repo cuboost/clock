@@ -37,14 +37,14 @@ type ClockSettingsContextType = {
   settings: ClockSettings;
   updateSetting: <K extends keyof ClockSettings>(
     key: K,
-    value: ClockSettings[K]
+    value: ClockSettings[K],
   ) => void;
   loading: boolean;
   resetSettings: () => void;
 };
 
 const ClockSettingsContext = createContext<ClockSettingsContextType | null>(
-  null
+  null,
 );
 
 export function ClockSettingsProvider({
@@ -71,7 +71,7 @@ export function ClockSettingsProvider({
 
   const updateSetting = async <K extends keyof ClockSettings>(
     key: K,
-    value: ClockSettings[K]
+    value: ClockSettings[K],
   ) => {
     const updated = { ...settings, [key]: value };
     setSettings(updated);
@@ -96,7 +96,7 @@ export function useClockSettings() {
   const context = useContext(ClockSettingsContext);
   if (!context)
     throw new Error(
-      "useClockSettings must be used within ClockSettingsProvider"
+      "useClockSettings must be used within ClockSettingsProvider",
     );
   return context;
 }
