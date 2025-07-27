@@ -61,18 +61,18 @@ export function ClockSettingsProvider({
           setSettings(decoded);
           await db.settings.put(decoded);
 
+          setLoading(false);
+          return;
+        } catch (err) {
+          console.error("Failed to decode settings:", err);
+          setTimeout(() => toast.error("Invalid shared settings"), 100);
+        } finally {
           // Clear the URL parameter
           window.history.replaceState(
             {},
             document.title,
             window.location.pathname,
           );
-
-          setLoading(false);
-          return;
-        } catch (err) {
-          console.error("Failed to decode settings:", err);
-          setTimeout(() => toast.error("Invalid shared settings"), 100);
         }
       }
 

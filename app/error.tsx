@@ -1,5 +1,8 @@
 "use client"; // Error boundaries must be Client Components
 
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Error({
@@ -15,16 +18,34 @@ export default function Error({
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </button>
+    <div className="flex h-dvh items-center justify-center gap-20">
+      <Image
+        src="/images/clock-icon.svg"
+        className="animate-crazy-clock delay-75"
+        width={150}
+        height={150}
+        draggable={false}
+        priority
+        alt="Clock icon"
+      />
+      <div className="">
+        <h1 className="animate-glitch-text p-6 delay-150">Sorry...</h1>
+        <h4 className="animate-glitch-text p-6 delay-200">
+          Something went wrong!
+        </h4>
+        <Link href="/" replace>
+          <Button
+            onClick={
+              // Attempt to recover by trying to re-render the segment
+              () => reset()
+            }
+            className="animate-glitch-text m-5 delay-250"
+            variant={"outline"}
+          >
+            Try again!
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }
