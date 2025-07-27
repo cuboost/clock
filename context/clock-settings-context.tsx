@@ -43,6 +43,7 @@ type ClockSettingsContextType = {
     key: K,
     value: ClockSettings[K],
   ) => void;
+  updateSettings: (values: Partial<ClockSettings>) => void;
   loading: boolean;
   resetSettings: () => void;
 };
@@ -82,14 +83,26 @@ export function ClockSettingsProvider({
     await db.settings.put(updated);
   };
 
+  const updateSettings = async (values: Partial<ClockSettings>) => {
+    const updated = { ...settings, ...values };
+    setSettings(updated);
+    await db.settings.put(updated);
+  };
+
   const resetSettings = async () => {
-    setSettings(DEFAULT_SETTINGS); // update local state
-    await db.settings.put(DEFAULT_SETTINGS); // update Dexie
+    setSettings(DEFAULT_SETTINGS);
+    await db.settings.put(DEFAULT_SETTINGS);
   };
 
   return (
     <ClockSettingsContext.Provider
-      value={{ settings, updateSetting, loading, resetSettings }}
+      value={{
+        settings,
+        updateSetting,
+        updateSettings,
+        loading,
+        resetSettings,
+      }}
     >
       {children}
     </ClockSettingsContext.Provider>

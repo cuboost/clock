@@ -8,6 +8,7 @@ export function ClockDisplay() {
   const time = useClock();
   const { settings, loading } = useClockSettings();
   const clockColor = useThemeColor("clock");
+  const displayDate = formattedDate.replace(",", " -");
 
   useTabTitle();
 
@@ -21,7 +22,7 @@ export function ClockDisplay() {
         stiffness: 300,
         damping: 20,
       }}
-      className="flex h-full w-full items-center justify-center"
+      className="flex h-full w-full flex-col items-center justify-center gap-2"
       style={{
         color: clockColor,
       }}
@@ -33,9 +34,7 @@ export function ClockDisplay() {
       </h1>
 
       {settings.showDate && (
-        <h2 className="text-xl tracking-wider">
-          {time.day}/{time.month}/{time.year}
-        </h2>
+        <h2 className="text-xl tracking-wider">{displayDate}</h2>
       )}
     </motion.div>
   );

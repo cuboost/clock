@@ -13,6 +13,17 @@ export type ThemeType =
   | "yellow"
   | "violet";
 
+export const themes: ThemeType[] = [
+  "default",
+  "red",
+  "rose",
+  "orange",
+  "green",
+  "blue",
+  "yellow",
+  "violet",
+];
+
 export interface ClockSettings {
   id: string;
   showSeconds: boolean;

@@ -9,6 +9,12 @@ export function createTimeObject(date: Date) {
     day: date.getDate().toString().padStart(2, "0"),
     month: (date.getMonth() + 1).toString().padStart(2, "0"),
     year: date.getFullYear().toString(),
+    toLocaleDateString: (
+      locales?: string | string[],
+      options?: Intl.DateTimeFormatOptions,
+    ) => {
+      return date.toLocaleDateString(locales, options);
+    },
   };
 }
 

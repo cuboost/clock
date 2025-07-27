@@ -11,15 +11,23 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useClockSettings } from "@/context/clock-settings-context";
-import { BackgroundType } from "@/lib/db";
+import { useThemeColor } from "@/hooks/use-theme-color";
+import { BackgroundType, themes } from "@/lib/db";
 import { Contrast, Focus, Settings2, SunMedium } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import ColorInput from "./color-input";
 import { ConfirmationDialog } from "./confirmation-dialog";
 import SliderInput from "./slider-input";
 import { SwitchInput } from "./switch-input";
-import { useThemeColor } from "@/hooks/use-theme-color";
+import ThemeButton from "./theme-button";
 
 export function SettingsSheet() {
   const { settings, updateSetting, loading, resetSettings } =
@@ -94,6 +102,45 @@ export function SettingsSheet() {
 
           <h3>Theme</h3>
           <ThemeToggle />
+          {/* <div className="grid grid-cols-4 grid-rows-2 gap-4">
+            {themes.map((theme) => (
+              <ThemeButton
+                key={theme}
+                label={
+                  theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"
+                }
+                themeName={theme}
+                onValueChange={(color) =>
+                  updateSetting("theme", color as ThemeType)
+                }
+              />
+            ))}
+          </div> */}
+          <Carousel
+            opts={{
+              align: "start",
+              slidesToScroll: 3,
+            }}
+            className="mx-auto w-full max-w-60"
+          >
+            <CarouselContent>
+              {themes.map((theme) => (
+                <CarouselItem
+                  key={theme}
+                  className="flex basis-1/3 items-center justify-center"
+                >
+                  <ThemeButton
+                    label={
+                      theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"
+                    }
+                    themeName={theme}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
 
           <h3>Clock Color</h3>
           <div className="flex justify-evenly">
