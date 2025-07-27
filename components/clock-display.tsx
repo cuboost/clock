@@ -8,6 +8,11 @@ export function ClockDisplay() {
   const time = useClock();
   const { settings, loading } = useClockSettings();
   const clockColor = useThemeColor("clock");
+  const formattedDate = time.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
   const displayDate = formattedDate.replace(",", " -");
 
   useTabTitle();

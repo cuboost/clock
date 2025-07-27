@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { db, ClockSettings } from "@/lib/db";
+import { toast } from "sonner";
 
 const DEFAULT_SETTINGS: ClockSettings = {
   id: "settings",
@@ -11,19 +12,10 @@ const DEFAULT_SETTINGS: ClockSettings = {
   showDate: false,
   showTimeInTab: true,
   customTabTitle: "Clock",
-  clockColorValues: {
-    light: "#000000",
-    dark: "#ffffff",
-  },
+  clockColorValues: { light: "#000000", dark: "#ffffff" },
   backgroundType: "color",
-  backgroundColorValues: {
-    light: "#ffffff",
-    dark: "#000000",
-  },
-  backgroundGradientValues: {
-    light: "#ffffff",
-    dark: "#000000",
-  },
+  backgroundColorValues: { light: "#ffffff", dark: "#000000" },
+  backgroundGradientValues: { light: "#ffffff", dark: "#000000" },
   backgroundImageLink: "",
   backgroundCustomValue: "",
   backgroundImageBlur: 10,
@@ -31,10 +23,7 @@ const DEFAULT_SETTINGS: ClockSettings = {
   backgroundImageContrast: 1,
   backgroundImageGrayscale: 0,
   theme: "default",
-  clockPosition: {
-    x: "center",
-    y: "center",
-  },
+  clockPosition: { x: "center", y: "center" },
 };
 
 type ClockSettingsContextType = {
@@ -44,8 +33,9 @@ type ClockSettingsContextType = {
     value: ClockSettings[K],
   ) => void;
   updateSettings: (values: Partial<ClockSettings>) => void;
-  loading: boolean;
   resetSettings: () => void;
+  generateShareLink: () => Promise<string>;
+  loading: boolean;
 };
 
 const ClockSettingsContext = createContext<ClockSettingsContextType | null>(
@@ -62,6 +52,30 @@ export function ClockSettingsProvider({
 
   useEffect(() => {
     const load = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const encoded = params.get("settings");
+
+      if (encoded) {
+        try {
+          const decoded = JSON.parse(atob(encoded));
+          setSettings(decoded);
+          await db.settings.put(decoded);
+
+          // Clear the URL parameter
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname,
+          );
+
+          setLoading(false);
+          return;
+        } catch (err) {
+          console.error("Failed to decode settings:", err);
+          setTimeout(() => toast.error("Invalid shared settings"), 100);
+        }
+      }
+
       const saved = await db.settings.get("settings");
       if (saved) {
         setSettings(saved);
@@ -71,6 +85,7 @@ export function ClockSettingsProvider({
       }
       setLoading(false);
     };
+
     load();
   }, []);
 
@@ -94,14 +109,21 @@ export function ClockSettingsProvider({
     await db.settings.put(DEFAULT_SETTINGS);
   };
 
+  const generateShareLink = async () => {
+    const saved = await db.settings.get("settings");
+    const toEncode = saved || settings;
+    return `${window.location.origin}?settings=${btoa(JSON.stringify(toEncode))}`;
+  };
+
   return (
     <ClockSettingsContext.Provider
       value={{
         settings,
         updateSetting,
         updateSettings,
-        loading,
         resetSettings,
+        generateShareLink,
+        loading,
       }}
     >
       {children}

@@ -25,6 +25,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import ColorInput from "./color-input";
 import { ConfirmationDialog } from "./confirmation-dialog";
+import LinkSharing from "./link-sharing";
 import SliderInput from "./slider-input";
 import { SwitchInput } from "./switch-input";
 import ThemeButton from "./theme-button";
@@ -102,20 +103,6 @@ export function SettingsSheet() {
 
           <h3>Theme</h3>
           <ThemeToggle />
-          {/* <div className="grid grid-cols-4 grid-rows-2 gap-4">
-            {themes.map((theme) => (
-              <ThemeButton
-                key={theme}
-                label={
-                  theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"
-                }
-                themeName={theme}
-                onValueChange={(color) =>
-                  updateSetting("theme", color as ThemeType)
-                }
-              />
-            ))}
-          </div> */}
           <Carousel
             opts={{
               align: "start",
@@ -286,6 +273,8 @@ export function SettingsSheet() {
               </TabsContent>
             </Tabs>
           </div>
+
+          <LinkSharing />
 
           <h3>Reset</h3>
           <p className="text-sm">

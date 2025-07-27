@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClockSettingsProvider } from "@/context/clock-settings-context";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClockSettingsProvider>{children}</ClockSettingsProvider>
+          <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
     </html>
