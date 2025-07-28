@@ -11,9 +11,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useClockSettings } from "@/context/clock-settings-context";
-import { useThemeColor } from "@/hooks/use-theme-color";
 import { BackgroundType, themes } from "@/lib/db";
-import { Contrast, Focus, Settings2, SunMedium } from "lucide-react";
+import { Contrast, Focus, SunMedium } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
 import {
   Carousel,
@@ -30,24 +29,18 @@ import SliderInput from "./slider-input";
 import { SwitchInput } from "./switch-input";
 import ThemeButton from "./theme-button";
 
-export function SettingsSheet() {
+type SettingsSheetProps = {
+  children: React.ReactNode;
+};
+
+export function SettingsSheet({ children }: SettingsSheetProps) {
   const { settings, updateSetting, loading, resetSettings } =
     useClockSettings();
-  const settingsColor = useThemeColor("clock");
 
   if (loading) return null;
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          variant={"ghost"}
-          className="absolute right-4 bottom-4"
-          style={{ color: settingsColor }}
-        >
-          <Settings2 className="h-10 w-10" />
-          Settings
-        </Button>
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="overflow-scroll">
         <SheetHeader>
           <SheetTitle>Settings</SheetTitle>

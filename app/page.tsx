@@ -1,7 +1,7 @@
 "use client";
 
 import { ClockDisplay } from "@/components/clock-display";
-import { SettingsSheet } from "@/components/settings/settings-sheet";
+import FloatingButtons from "@/components/floating-buttons";
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useApplyTheme } from "@/hooks/use-apply-theme";
 import { useTheme } from "next-themes";
@@ -50,7 +50,7 @@ export default function Clock() {
         }}
       >
         <ClockDisplay />
-        <SettingsSheet />
+        <FloatingButtons />
       </main>
     </div>
   );
