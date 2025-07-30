@@ -1,8 +1,17 @@
 import Dexie, { Table } from "dexie";
 
 export type BackgroundType = "image" | "color" | "gradient";
-export type ClockPositionXType = "left" | "center" | "right";
-export type ClockPositionYType = "top" | "center" | "bottom";
+export type ClockPositionType =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "center-left"
+  | "center"
+  | "center-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right";
+
 export type ThemeType =
   | "default"
   | "red"
@@ -52,10 +61,8 @@ export interface ClockSettings {
   backgroundImageGrayscale: number;
   backgroundCustomValue: string;
   theme: ThemeType;
-  clockPosition: {
-    x: ClockPositionXType;
-    y: ClockPositionYType;
-  };
+  clockPosition: ClockPositionType;
+  clockSize: number;
 }
 
 class ClockAppDB extends Dexie {

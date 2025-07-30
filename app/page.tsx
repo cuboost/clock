@@ -42,7 +42,7 @@ export default function Clock() {
             };
 
   return (
-    <div style={backgroundStyle} className="h-dvh w-full">
+    <div style={backgroundStyle} className="h-dvh w-full overflow-hidden">
       <main
         className="flex h-full w-full flex-col items-center justify-center gap-3 p-10 text-center"
         style={{

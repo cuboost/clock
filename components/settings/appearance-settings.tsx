@@ -1,5 +1,7 @@
-import { Contrast, Focus, SunMedium } from "lucide-react";
-import SliderInput from "./slider-input";
+import { useClockSettings } from "@/context/clock-settings-context";
+import { BackgroundType, ClockPositionType, themes } from "@/lib/db";
+import { Contrast, Focus, Ruler, SunMedium } from "lucide-react";
+import { ThemeToggle } from "../theme/theme-toggle";
 import {
   Carousel,
   CarouselContent,
@@ -7,17 +9,25 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { ThemeToggle } from "../theme/theme-toggle";
-import ThemeButton from "./theme-button";
-import { themes, BackgroundType } from "@/lib/db";
 import { Input } from "../ui/input";
-import ColorInput from "./color-input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { useClockSettings } from "@/context/clock-settings-context";
 import { Label } from "../ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import ColorInput from "./color-input";
+import SliderInput from "./slider-input";
+import ThemeButton from "./theme-button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { positionClasses } from "@/lib/clock-positions";
 
 export default function AppearanceSettings() {
   const { settings, updateSetting } = useClockSettings();
+  const clockPositions = Object.keys(positionClasses) as ClockPositionType[];
+
   return (
     <>
       <h3>Theme</h3>
@@ -48,7 +58,7 @@ export default function AppearanceSettings() {
         <CarouselNext />
       </Carousel>
 
-      <h3>Clock Color</h3>
+      <h3>Clock</h3>
       <div className="flex justify-evenly">
         <ColorInput
           id="clock-color-light"
@@ -73,6 +83,36 @@ export default function AppearanceSettings() {
           }
         />
       </div>
+      <SliderInput
+        id="clock-size"
+        label="Clock Size"
+        onValueChange={(value) => updateSetting("clockSize", value)}
+        min={20}
+        max={300}
+        value={settings.clockSize}
+        icon={<Ruler />}
+        defaultValue={70}
+      />
+      <Select
+        value={settings.clockPosition}
+        onValueChange={(value) =>
+          updateSetting("clockPosition", value as ClockPositionType)
+        }
+      >
+        <SelectTrigger>
+          <SelectValue placeholder="Position" />
+        </SelectTrigger>
+        <SelectContent>
+          {clockPositions.map((pos) => (
+            <SelectItem key={pos} value={pos}>
+              {pos
+                .split("-")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <h3>Background</h3>
       <div className="flex w-full flex-col gap-6">

@@ -7,6 +7,7 @@ type SliderInputProps = {
   value: number;
   onValueChange: (value: number) => void;
   icon?: React.ReactNode;
+  min?: number;
   max?: number;
   step?: number;
   defaultValue?: number;
@@ -18,19 +19,22 @@ export default function SliderInput({
   value,
   onValueChange,
   icon,
+  min = 0,
   max = 100,
   step = 1,
   defaultValue = 0,
 }: SliderInputProps) {
   return (
     <div className="flex w-full items-center justify-center gap-3">
-      <Label
-        htmlFor={id}
-        className="bg-muted hover:bg-muted/80 cursor-pointer rounded-full p-2 transition-colors"
-        onClick={() => onValueChange(defaultValue)}
-      >
-        {icon}
-      </Label>
+      {icon && (
+        <Label
+          htmlFor={id}
+          className="bg-muted hover:bg-muted/80 cursor-pointer rounded-full p-2 transition-colors"
+          onClick={() => onValueChange(defaultValue)}
+        >
+          {icon}
+        </Label>
+      )}
       <div className="grid w-full gap-3">
         <Label htmlFor={id}>{label}</Label>
         <Slider
@@ -38,6 +42,7 @@ export default function SliderInput({
           value={[value]}
           onValueChange={(e) => onValueChange(e[0])}
           max={max}
+          min={min}
           step={step}
           className=""
         />

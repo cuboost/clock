@@ -23,7 +23,8 @@ const DEFAULT_SETTINGS: ClockSettings = {
   backgroundImageContrast: 1,
   backgroundImageGrayscale: 0,
   theme: "default",
-  clockPosition: { x: "center", y: "center" },
+  clockPosition: "center",
+  clockSize: 70,
 };
 
 type ClockSettingsContextType = {
