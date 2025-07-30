@@ -27,10 +27,7 @@ export default function FloatingButtons() {
   };
 
   return (
-    <div
-      className="absolute right-4 bottom-4 flex items-center justify-end"
-      style={{ color: settingsColor }}
-    >
+    <div className="absolute right-4 bottom-4 flex items-center justify-end">
       <SettingsSheet>
         <motion.div
           className="flex items-center overflow-hidden"
@@ -42,7 +39,11 @@ export default function FloatingButtons() {
           }}
           transition={{ duration: 0.3 }}
         >
-          <Button variant="ghost" className="flex items-center gap-2 p-2">
+          <Button
+            variant="ghost"
+            className="flex items-center gap-2 p-2"
+            style={{ color: settingsColor }}
+          >
             <Settings2 />
             <motion.span
               className="text-sm whitespace-nowrap"
@@ -68,6 +69,7 @@ export default function FloatingButtons() {
           variant="ghost"
           className="flex items-center gap-2 p-2"
           onClick={toggleFullscreen}
+          style={{ color: settingsColor }}
         >
           {isFullscreen ? <Minimize2 /> : <Maximize2 />}
           <motion.span
