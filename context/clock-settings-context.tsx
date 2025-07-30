@@ -7,9 +7,9 @@ import { toast } from "sonner";
 const DEFAULT_SETTINGS: ClockSettings = {
   id: "settings",
   showSeconds: true,
-  twelveHourFormat: true,
-  showAmPm: true,
-  showDate: false,
+  twelveHourFormat: false,
+  showAmPm: false,
+  showDate: true,
   showTimeInTab: true,
   customTabTitle: "Clock",
   clockColorValues: { light: "#000000", dark: "#ffffff" },
