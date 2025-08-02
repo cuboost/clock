@@ -32,6 +32,8 @@ export default function AppearanceSettings() {
     <>
       <h3>Theme</h3>
       <ThemeToggle />
+
+      <h3>Accent Color</h3>
       <Carousel
         opts={{
           align: "start",
