@@ -10,4 +10,5 @@ export const positionClasses: Record<ClockPositionType, string> = {
   "bottom-left": "items-end justify-start",
   "bottom-center": "items-end justify-center",
   "bottom-right": "items-end justify-end",
+  custom: "items-center justify-center",
 };

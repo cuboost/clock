@@ -1,3 +1,5 @@
+"use client";
+
 import { useClockSettings } from "@/context/clock-settings-context";
 import { Button } from "../ui/button";
 import { ConfirmationDialog } from "./confirmation-dialog";
@@ -16,6 +18,7 @@ export default function Reset() {
         trigger={<Button>Reset to Defaults</Button>}
         onConfirm={() => {
           resetSettings();
+          window.location.reload();
         }}
         confirmText="Reset"
       />

@@ -1,5 +1,5 @@
 import { useClockSettings } from "@/context/clock-settings-context";
-import { RefreshCw } from "lucide-react";
+import { Copy } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -49,9 +49,9 @@ export default function LinkSharing() {
           onClick={() => refreshAndCopy(true)}
           disabled={loading}
           aria-busy={loading}
-          title={loading ? "Generating link..." : "Refresh share link"}
+          title={loading ? "Generating link..." : "Copy share link"}
         >
-          <RefreshCw />
+          <Copy />
         </Button>
       </div>
     </>

@@ -96,10 +96,34 @@ export default function AppearanceSettings() {
         defaultValue={70}
       />
       <Select
-        value={settings.clockPosition}
-        onValueChange={(value) =>
-          updateSetting("clockPosition", value as ClockPositionType)
-        }
+        value={settings.clockPosition.preset}
+        onValueChange={(value) => {
+          if (value === "custom") {
+            updateSetting("clockPosition", {
+              preset: "custom",
+              custom:
+                settings.clockPosition.preset === "custom"
+                  ? settings.clockPosition.custom
+                  : { x: 0, y: 0 },
+            });
+          } else {
+            updateSetting(
+              "clockPosition",
+              value === "custom"
+                ? {
+                    preset: "custom",
+                    custom:
+                      settings.clockPosition.preset === "custom"
+                        ? settings.clockPosition.custom
+                        : { x: 0, y: 0 },
+                  }
+                : {
+                    preset: value as ClockPositionType,
+                    custom: { x: 0, y: 0 },
+                  },
+            );
+          }
+        }}
       >
         <SelectTrigger>
           <SelectValue placeholder="Position" />
@@ -115,6 +139,30 @@ export default function AppearanceSettings() {
           ))}
         </SelectContent>
       </Select>
+      <Input
+        value={settings.clockPosition.custom.x}
+        onChange={(e) =>
+          updateSetting("clockPosition", {
+            preset: "custom",
+            custom: {
+              x: parseFloat(e.target.value) || 0,
+              y: settings.clockPosition.custom.y,
+            },
+          })
+        }
+      />
+      <Input
+        value={settings.clockPosition.custom.y}
+        onChange={(e) =>
+          updateSetting("clockPosition", {
+            preset: "custom",
+            custom: {
+              x: settings.clockPosition.custom.x,
+              y: parseFloat(e.target.value) || 0,
+            },
+          })
+        }
+      />
 
       <h3>Background</h3>
       <div className="flex w-full flex-col gap-6">

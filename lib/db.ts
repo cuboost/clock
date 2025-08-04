@@ -10,7 +10,8 @@ export type ClockPositionType =
   | "center-right"
   | "bottom-left"
   | "bottom-center"
-  | "bottom-right";
+  | "bottom-right"
+  | "custom";
 
 export type ThemeType =
   | "default"
@@ -61,7 +62,12 @@ export interface ClockSettings {
   backgroundImageGrayscale: number;
   backgroundCustomValue: string;
   theme: ThemeType;
-  clockPosition: ClockPositionType;
+  clockPosition: {
+    preset: ClockPositionType;
+    custom: { x: number; y: number };
+  };
+  // clockFontFamily: string;
+  // clockFontWeight: string;
   clockSize: number;
 }
 
