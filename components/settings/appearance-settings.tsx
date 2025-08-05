@@ -1,4 +1,5 @@
 import { useClockSettings } from "@/context/clock-settings-context";
+import { positionClasses } from "@/lib/clock-positions";
 import { BackgroundType, ClockPositionType, themes } from "@/lib/db";
 import { Contrast, Focus, Ruler, SunMedium } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
@@ -11,10 +12,6 @@ import {
 } from "../ui/carousel";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import ColorInput from "./color-input";
-import SliderInput from "./slider-input";
-import ThemeButton from "./theme-button";
 import {
   Select,
   SelectContent,
@@ -22,158 +19,173 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { positionClasses } from "@/lib/clock-positions";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Textarea } from "../ui/textarea";
+import ColorInput from "./color-input";
+import SettingsSection from "./settings-section";
+import SliderInput from "./slider-input";
+import ThemeButton from "./theme-button";
+import { Button } from "../ui/button";
+import { useState } from "react";
 
 export default function AppearanceSettings() {
   const { settings, updateSetting } = useClockSettings();
   const clockPositions = Object.keys(positionClasses) as ClockPositionType[];
 
+  const [customCSSValue, setCustomCSSValue] = useState("");
+
   return (
     <>
-      <h3>Theme</h3>
-      <ThemeToggle />
+      <SettingsSection title="Theme">
+        <ThemeToggle />
+      </SettingsSection>
 
-      <h3>Accent Color</h3>
-      <Carousel
-        opts={{
-          align: "start",
-          slidesToScroll: 3,
-        }}
-        className="mx-auto w-full max-w-60"
-      >
-        <CarouselContent>
-          {themes.map((theme) => (
-            <CarouselItem
-              key={theme}
-              className="flex basis-1/3 items-center justify-center"
-            >
-              <ThemeButton
-                label={
-                  theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"
-                }
-                themeName={theme}
-              />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-
-      <h3>Clock</h3>
-      <div className="flex justify-evenly">
-        <ColorInput
-          id="clock-color-light"
-          label="Light Theme Color"
-          value={settings.clockColorValues.light}
-          onValueChange={(value) =>
-            updateSetting("clockColorValues", {
-              light: value,
-              dark: settings.clockColorValues.dark,
-            })
-          }
-        />
-        <ColorInput
-          id="clock-color-dark"
-          label="Dark Theme Color"
-          value={settings.clockColorValues.dark}
-          onValueChange={(value) =>
-            updateSetting("clockColorValues", {
-              light: settings.clockColorValues.light,
-              dark: value,
-            })
-          }
-        />
-      </div>
-      <SliderInput
-        id="clock-size"
-        label="Clock Size"
-        onValueChange={(value) => updateSetting("clockSize", value)}
-        min={20}
-        max={300}
-        value={settings.clockSize}
-        icon={<Ruler />}
-        defaultValue={70}
-      />
-      <Select
-        value={settings.clockPosition.preset}
-        onValueChange={(value) => {
-          if (value === "custom") {
-            updateSetting("clockPosition", {
-              preset: "custom",
-              custom:
-                settings.clockPosition.preset === "custom"
-                  ? settings.clockPosition.custom
-                  : { x: 0, y: 0 },
-            });
-          } else {
-            updateSetting(
-              "clockPosition",
-              value === "custom"
-                ? {
-                    preset: "custom",
-                    custom:
-                      settings.clockPosition.preset === "custom"
-                        ? settings.clockPosition.custom
-                        : { x: 0, y: 0 },
+      <SettingsSection title="Accent Color">
+        <Carousel
+          opts={{
+            align: "start",
+            slidesToScroll: 3,
+          }}
+          className="mx-auto w-full max-w-52"
+        >
+          <CarouselContent>
+            {themes.map((theme) => (
+              <CarouselItem
+                key={theme}
+                className="flex basis-1/3 items-center justify-center"
+              >
+                <ThemeButton
+                  label={
+                    theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"
                   }
-                : {
-                    preset: value as ClockPositionType,
-                    custom: { x: 0, y: 0 },
-                  },
-            );
-          }
-        }}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Position" />
-        </SelectTrigger>
-        <SelectContent>
-          {clockPositions.map((pos) => (
-            <SelectItem key={pos} value={pos}>
-              {pos
-                .split("-")
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ")}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <Input
-        value={settings.clockPosition.custom.x}
-        onChange={(e) =>
-          updateSetting("clockPosition", {
-            preset: "custom",
-            custom: {
-              x: parseFloat(e.target.value) || 0,
-              y: settings.clockPosition.custom.y,
-            },
-          })
-        }
-      />
-      <Input
-        value={settings.clockPosition.custom.y}
-        onChange={(e) =>
-          updateSetting("clockPosition", {
-            preset: "custom",
-            custom: {
-              x: settings.clockPosition.custom.x,
-              y: parseFloat(e.target.value) || 0,
-            },
-          })
-        }
-      />
+                  themeName={theme}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </SettingsSection>
 
-      <h3>Background</h3>
-      <div className="flex w-full flex-col gap-6">
+      <SettingsSection title="Clock">
+        <div className="flex justify-evenly">
+          <ColorInput
+            id="clock-color-light"
+            label="Light Theme Color"
+            value={settings.clockColorValues.light}
+            onValueChange={(value) =>
+              updateSetting("clockColorValues", {
+                light: value,
+                dark: settings.clockColorValues.dark,
+              })
+            }
+          />
+          <ColorInput
+            id="clock-color-dark"
+            label="Dark Theme Color"
+            value={settings.clockColorValues.dark}
+            onValueChange={(value) =>
+              updateSetting("clockColorValues", {
+                light: settings.clockColorValues.light,
+                dark: value,
+              })
+            }
+          />
+        </div>
+        <SliderInput
+          id="clock-size"
+          label="Clock Size"
+          onValueChange={(value) => updateSetting("clockSize", value)}
+          min={20}
+          max={300}
+          value={settings.clockSize}
+          icon={<Ruler />}
+          defaultValue={70}
+        />
+        <Select
+          value={settings.clockPosition.preset}
+          onValueChange={(value) => {
+            if (value === "custom") {
+              updateSetting("clockPosition", {
+                preset: "custom",
+                custom:
+                  settings.clockPosition.preset === "custom"
+                    ? settings.clockPosition.custom
+                    : { x: 0, y: 0 },
+              });
+            } else {
+              updateSetting(
+                "clockPosition",
+                value === "custom"
+                  ? {
+                      preset: "custom",
+                      custom:
+                        settings.clockPosition.preset === "custom"
+                          ? settings.clockPosition.custom
+                          : { x: 0, y: 0 },
+                    }
+                  : {
+                      preset: value as ClockPositionType,
+                      custom: { x: 0, y: 0 },
+                    },
+              );
+            }
+          }}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Position" />
+          </SelectTrigger>
+          <SelectContent>
+            {clockPositions.map((pos) => (
+              <SelectItem key={pos} value={pos}>
+                {pos
+                  .split("-")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {settings.clockPosition.preset === "custom" && (
+          <div className="flex items-center justify-center gap-4">
+            <Input
+              value={settings.clockPosition.custom.x}
+              onChange={(e) =>
+                updateSetting("clockPosition", {
+                  preset: "custom",
+                  custom: {
+                    x: parseFloat(e.target.value) || 0,
+                    y: settings.clockPosition.custom.y,
+                  },
+                })
+              }
+            />
+            <Input
+              value={settings.clockPosition.custom.y}
+              onChange={(e) =>
+                updateSetting("clockPosition", {
+                  preset: "custom",
+                  custom: {
+                    x: settings.clockPosition.custom.x,
+                    y: parseFloat(e.target.value) || 0,
+                  },
+                })
+              }
+            />
+          </div>
+        )}
+      </SettingsSection>
+
+      <SettingsSection title="Background">
         <Tabs
           value={settings.backgroundType}
           onValueChange={(value) =>
             updateSetting("backgroundType", value as BackgroundType)
           }
         >
-          <TabsList className="mb-3 w-full">
-            <TabsTrigger value="color">Solid Color</TabsTrigger>
+          <TabsList className="mb-2 w-full">
+            <TabsTrigger value="color">Color</TabsTrigger>
             <TabsTrigger value="gradient">Gradient</TabsTrigger>
             <TabsTrigger value="image">Image</TabsTrigger>
             <TabsTrigger value="custom">Custom</TabsTrigger>
@@ -266,22 +278,29 @@ export default function AppearanceSettings() {
               defaultValue={0}
             />
           </TabsContent>
-
-          <TabsContent value="custom">
-            <div className="grid gap-3">
-              <Label htmlFor="custom-background">Custom</Label>
-              <Input
-                id="custom-background"
-                value={settings.backgroundImageLink}
-                onChange={(e) =>
-                  updateSetting("backgroundCustomValue", e.target.value)
-                }
-                placeholder="https://example.com/image.png"
-              />
-            </div>
-          </TabsContent>
         </Tabs>
-      </div>
+      </SettingsSection>
+      <SettingsSection
+        title="Custom CSS"
+        description="Add custom CSS properties to the <html> tag."
+        footer={
+          <Button
+            onClick={() =>
+              updateSetting("backgroundCustomValue", customCSSValue)
+            }
+            className="w-full"
+          >
+            Save
+          </Button>
+        }
+      >
+        <Textarea
+          id="custom"
+          value={customCSSValue}
+          onChange={(e) => setCustomCSSValue(e.target.value)}
+          placeholder="opacity: 0.5;"
+        />
+      </SettingsSection>
     </>
   );
 }

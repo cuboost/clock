@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import SettingsSection from "./settings-section";
 
 export default function LinkSharing() {
   const { generateShareLink } = useClockSettings();
@@ -36,24 +37,28 @@ export default function LinkSharing() {
 
   return (
     <>
-      <h3>Link Sharing</h3>
-      <div className="flex gap-2">
-        <Input
-          id="share-link"
-          value={link}
-          readOnly
-          placeholder="Link generating..."
-        />
-        <Button
-          variant="outline"
-          onClick={() => refreshAndCopy(true)}
-          disabled={loading}
-          aria-busy={loading}
-          title={loading ? "Generating link..." : "Copy share link"}
-        >
-          <Copy />
-        </Button>
-      </div>
+      <SettingsSection
+        title="Link Sharing"
+        description="Share your clock settings with others. Just copy the link below and open it in a new browser."
+      >
+        <div className="flex gap-2">
+          <Input
+            id="share-link"
+            value={link}
+            readOnly
+            placeholder="Link generating..."
+          />
+          <Button
+            variant="outline"
+            onClick={() => refreshAndCopy(true)}
+            disabled={loading}
+            aria-busy={loading}
+            title={loading ? "Generating link..." : "Copy share link"}
+          >
+            <Copy />
+          </Button>
+        </div>
+      </SettingsSection>
     </>
   );
 }

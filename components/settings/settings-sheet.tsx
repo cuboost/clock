@@ -18,48 +18,65 @@ type SettingsSheetProps = {
   children: React.ReactNode;
 };
 
+// Define an array of tab objects without a separate 'label' property
+const settingsTabs = [
+  {
+    value: "general",
+    component: <GeneralSettings />,
+  },
+  {
+    value: "appearance",
+    component: <AppearanceSettings />,
+  },
+  {
+    value: "more",
+    component: <MoreSettings />,
+  },
+];
+
 export function SettingsSheet({ children }: SettingsSheetProps) {
   const { loading } = useClockSettings();
   const [settingTab, setSettingTab] = useState("general");
 
   if (loading) return null;
+
+  // Helper function to capitalize the first letter
+  const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
+
       <SheetContent className="overflow-scroll">
-        <SheetHeader>
-          <SheetTitle>Settings</SheetTitle>
+        <SheetHeader className="p-6 pb-0">
+          <SheetTitle className="text-2xl">Settings</SheetTitle>
         </SheetHeader>
-        <div className="px-5">
+
+        <div className="p-6 pt-0">
           <Tabs
             value={settingTab}
-            onValueChange={(value) =>
-              setSettingTab(value as "general" | "appearance" | "more")
-            }
+            onValueChange={setSettingTab}
+            className="gap-3"
           >
             <TabsList className="w-full">
-              <TabsTrigger value="general">General</TabsTrigger>
-              <TabsTrigger value="appearance">Appearance</TabsTrigger>
-              <TabsTrigger value="more">More</TabsTrigger>
+              {settingsTabs.map((tab) => (
+                <TabsTrigger key={tab.value} value={tab.value}>
+                  {capitalizeFirstLetter(tab.value)}
+                </TabsTrigger>
+              ))}
             </TabsList>
-            <TabsContent
-              value="general"
-              className="mb-4 grid flex-1 auto-rows-min gap-6"
-            >
-              <GeneralSettings />
-            </TabsContent>
-            <TabsContent
-              value="appearance"
-              className="mb-4 grid flex-1 auto-rows-min gap-6"
-            >
-              <AppearanceSettings />
-            </TabsContent>
-            <TabsContent
-              value="more"
-              className="mb-4 grid flex-1 auto-rows-min gap-6"
-            >
-              <MoreSettings />
-            </TabsContent>
+
+            {settingsTabs.map((tab) => (
+              <TabsContent
+                key={tab.value}
+                value={tab.value}
+                className="grid flex-1 auto-rows-min gap-3"
+              >
+                {tab.component}
+              </TabsContent>
+            ))}
           </Tabs>
         </div>
       </SheetContent>
