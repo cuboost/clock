@@ -60,7 +60,7 @@ export interface ClockSettings {
   backgroundImageBrightness: number;
   backgroundImageContrast: number;
   backgroundImageGrayscale: number;
-  backgroundCustomValue: string;
+  customCSS: string;
   theme: ThemeType;
   clockPosition: {
     preset: ClockPositionType;

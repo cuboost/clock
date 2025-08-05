@@ -285,9 +285,7 @@ export default function AppearanceSettings() {
         description="Add custom CSS properties to the <html> tag."
         footer={
           <Button
-            onClick={() =>
-              updateSetting("backgroundCustomValue", customCSSValue)
-            }
+            onClick={() => updateSetting("customCSS", customCSSValue)}
             className="w-full"
           >
             Save

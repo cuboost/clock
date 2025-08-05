@@ -17,7 +17,7 @@ const DEFAULT_SETTINGS: ClockSettings = {
   backgroundColorValues: { light: "#ffffff", dark: "#000000" },
   backgroundGradientValues: { light: "#ffffff", dark: "#000000" },
   backgroundImageLink: "",
-  backgroundCustomValue: "",
+  customCSS: "",
   backgroundImageBlur: 10,
   backgroundImageBrightness: 1,
   backgroundImageContrast: 1,

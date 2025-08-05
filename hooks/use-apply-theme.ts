@@ -13,7 +13,7 @@ export function useApplyTheme() {
     const rootElement = document.documentElement;
 
     // Split the custom CSS string into individual lines
-    const cssLines = settings.backgroundCustomValue.split(";");
+    const cssLines = settings.customCSS.split(";");
 
     // Loop through each line and apply the CSS variable
     cssLines.forEach((line) => {
@@ -24,5 +24,5 @@ export function useApplyTheme() {
         rootElement.style.setProperty(variable.trim(), value.trim());
       }
     });
-  }, [settings.backgroundCustomValue, settings.theme]);
+  }, [settings.customCSS, settings.theme]);
 }
