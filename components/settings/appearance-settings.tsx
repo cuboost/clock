@@ -33,6 +33,7 @@ export default function AppearanceSettings() {
   const clockPositions = Object.keys(positionClasses) as ClockPositionType[];
 
   const [customCSSValue, setCustomCSSValue] = useState("");
+  const axes = ["x", "y"] as const;
 
   return (
     <>
@@ -149,30 +150,30 @@ export default function AppearanceSettings() {
         </Select>
         {settings.clockPosition.preset === "custom" && (
           <div className="flex items-center justify-center gap-4">
-            <Input
-              value={settings.clockPosition.custom.x}
-              onChange={(e) =>
-                updateSetting("clockPosition", {
-                  preset: "custom",
-                  custom: {
-                    x: parseFloat(e.target.value) || 0,
-                    y: settings.clockPosition.custom.y,
-                  },
-                })
-              }
-            />
-            <Input
-              value={settings.clockPosition.custom.y}
-              onChange={(e) =>
-                updateSetting("clockPosition", {
-                  preset: "custom",
-                  custom: {
-                    x: settings.clockPosition.custom.x,
-                    y: parseFloat(e.target.value) || 0,
-                  },
-                })
-              }
-            />
+            {axes.map((axis) => (
+              <div key={axis} className="grid gap-2">
+                <Label htmlFor={axis}>{axis.toUpperCase()} Position</Label>
+                <Input
+                  id={axis}
+                  type="number"
+                  step="1"
+                  value={
+                    Math.round(settings.clockPosition.custom[axis] * 10) / 10
+                  }
+                  onChange={(e) =>
+                    updateSetting("clockPosition", {
+                      preset: "custom",
+                      custom: {
+                        ...settings.clockPosition.custom,
+                        [axis]:
+                          Math.round((parseFloat(e.target.value) || 0) * 10) /
+                          10,
+                      },
+                    })
+                  }
+                />
+              </div>
+            ))}
           </div>
         )}
       </SettingsSection>

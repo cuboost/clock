@@ -28,7 +28,7 @@ export function ClockDisplay() {
   useEffect(() => {
     if (settings.clockPosition.preset === "custom") {
       x.set(settings.clockPosition.custom?.x ?? 0);
-      y.set(settings.clockPosition.custom?.y ?? 0);
+      y.set(-(settings.clockPosition.custom?.y ?? 0));
     } else {
       x.set(0);
       y.set(0);
@@ -67,7 +67,7 @@ export function ClockDisplay() {
       preset: "custom",
       custom: {
         x: newX,
-        y: newY,
+        y: -newY,
       },
     });
   };

@@ -17,12 +17,12 @@ export default function NotFound() {
   }, [router]);
 
   return (
-    <div className="flex h-dvh items-center justify-center gap-20">
+    <div className="flex h-dvh flex-col items-center justify-center gap-6 text-center md:flex-row md:gap-20 md:text-left">
       <Image
         src="/images/clock-icon.svg"
-        className="animate-crazy-clock delay-75"
-        width={150}
-        height={150}
+        className="animate-crazy-clock opacity-75 delay-75"
+        width={130}
+        height={130}
         draggable={false}
         priority
         alt="Clock icon"
