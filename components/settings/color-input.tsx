@@ -15,7 +15,7 @@ export default function ColorInput({
 }: ColorInputProps) {
   return (
     <div className="my-1 flex w-full items-center gap-3">
-      <div className="focus-visible:border-ring focus-visible:ring-ring/50 relative flex h-10 w-10 items-center justify-center rounded-full transition focus-within:ring-[3px]">
+      <div className="focus-within:border-ring focus-within:ring-ring/50 relative flex h-10 w-10 items-center justify-center rounded-full shadow-xs transition focus-within:ring-[3px]">
         <input
           type="color"
           id={id}

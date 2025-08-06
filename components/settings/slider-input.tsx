@@ -29,7 +29,7 @@ export default function SliderInput({
       {icon && (
         <Label
           htmlFor={id}
-          className="bg-muted hover:bg-muted/80 cursor-pointer rounded-full p-2 transition-colors"
+          className="bg-muted hover:bg-muted/80 cursor-pointer rounded-full p-2 shadow-xs transition-colors"
           onClick={() => onValueChange(defaultValue)}
         >
           {icon}
