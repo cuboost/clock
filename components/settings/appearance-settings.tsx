@@ -286,10 +286,8 @@ export default function AppearanceSettings() {
         </Tabs>
       </SettingsSection>
       <SettingsSection title="Fonts">
-        <div className="grid grid-cols-2 gap-3">
-          <FontSelect label="Clock" id="clock-font" setting="clockFontFamily" />
-          <FontSelect label="Date" id="date-font" setting="dateFontFamily" />
-        </div>
+        <FontSelect label="Clock" id="clock-font" setting="clockFontFamily" />
+        <FontSelect label="Date" id="date-font" setting="dateFontFamily" />
       </SettingsSection>
       <SettingsSection
         title="Custom CSS"
