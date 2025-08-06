@@ -24,7 +24,7 @@ export default function SettingsSection({
         <CardTitle>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
-      <CardContent className="grid gap-6">{children}</CardContent>
+      <CardContent className="grid gap-4">{children}</CardContent>
       {footer && <CardFooter>{footer}</CardFooter>}
     </Card>
   );

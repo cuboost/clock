@@ -139,7 +139,17 @@ export function ClockDisplay() {
           )}
         </h1>
 
-        {settings.showDate && <h2 className="tracking-wider">{displayDate}</h2>}
+        {settings.showDate && (
+          <h2
+            className="tracking-wider"
+            style={{
+              // fontSize: settings.clockSize,
+              fontFamily: settings.dateFontFamily,
+            }}
+          >
+            {displayDate}
+          </h2>
+        )}
       </motion.div>
     </div>
   );

@@ -1,5 +1,3 @@
-"use client";
-
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,6 +16,8 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 import { useClockSettings } from "@/context/clock-settings-context";
+import { ClockSettings } from "@/lib/db";
+import { Label } from "../ui/label";
 
 const fonts = [
   { label: "Geist Sans (Default)", value: "" },
@@ -33,61 +33,75 @@ const fonts = [
   { label: "Trebuchet MS", value: "'Trebuchet MS', sans-serif" },
 ];
 
-export function FontSelect() {
+type FontSettingKey = {
+  [K in keyof ClockSettings]: ClockSettings[K] extends string ? K : never;
+}[keyof ClockSettings];
+
+type FontSelectProps = {
+  label: string;
+  id: string;
+  setting: FontSettingKey;
+};
+
+export function FontSelect({ label, id, setting }: FontSelectProps) {
   const { settings, updateSetting } = useClockSettings();
   const [open, setOpen] = useState(false);
 
-  const currentFontValue = settings.clockFontFamily ?? "";
+  const currentFontValue = settings[setting] ?? "";
   const selectedFont =
     fonts.find((font) => font.value === currentFontValue) ?? fonts[0];
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          <span style={{ fontFamily: selectedFont.value }}>
-            {selectedFont.label}
-          </span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
+    <div className="grid gap-3">
+      <Label htmlFor={id}>{label}</Label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-[200px] justify-between"
+            id={id}
+          >
+            <span style={{ fontFamily: selectedFont.value }}>
+              {selectedFont.label}
+            </span>
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
 
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search font..." className="h-9" />
-          <CommandList>
-            <CommandEmpty>No font found.</CommandEmpty>
-            <CommandGroup>
-              {fonts.map((font) => (
-                <CommandItem
-                  key={font.label}
-                  value={font.value || "__default__"} // for internal handling
-                  onSelect={() => {
-                    updateSetting("clockFontFamily", font.value);
-                    setOpen(false);
-                  }}
-                  style={{ fontFamily: font.value }}
-                >
-                  {font.label}
-                  <Check
-                    className={cn(
-                      "ml-auto h-4 w-4",
-                      font.value === currentFontValue
-                        ? "opacity-100"
-                        : "opacity-0",
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+        <PopoverContent className="w-[200px] p-0">
+          <Command>
+            <CommandInput placeholder="Search font..." className="h-9" />
+            <CommandList>
+              <CommandEmpty>No font found.</CommandEmpty>
+              <CommandGroup>
+                {fonts.map((font) => (
+                  <CommandItem
+                    key={font.label}
+                    value={font.value || "__default__"}
+                    onSelect={() => {
+                      updateSetting(setting, font.value);
+                      setOpen(false);
+                    }}
+                    style={{ fontFamily: font.value }}
+                  >
+                    {font.label}
+                    <Check
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        font.value === currentFontValue
+                          ? "opacity-100"
+                          : "opacity-0",
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }

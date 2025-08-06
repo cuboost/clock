@@ -27,6 +27,7 @@ const DEFAULT_SETTINGS: ClockSettings = {
   clockPosition: { preset: "center", custom: { x: 0, y: 0 } },
   clockSize: 70,
   clockFontFamily: "",
+  dateFontFamily: "",
 };
 
 type ClockSettingsContextType = {

@@ -105,7 +105,7 @@ export default function AppearanceSettings() {
           icon={<Ruler />}
           defaultValue={70}
         />
-        <div className="grid gap-2">
+        <div className="grid gap-3">
           <Label htmlFor="clock-position">Position</Label>
           <Select
             value={settings.clockPosition.preset}
@@ -156,7 +156,7 @@ export default function AppearanceSettings() {
         {settings.clockPosition.preset === "custom" && (
           <div className="flex items-center justify-center gap-4">
             {axes.map((axis) => (
-              <div key={axis} className="grid gap-2">
+              <div key={axis} className="grid gap-3">
                 <Label htmlFor={axis}>{axis.toUpperCase()} Position</Label>
                 <Input
                   id={axis}
@@ -190,7 +190,7 @@ export default function AppearanceSettings() {
             updateSetting("backgroundType", value as BackgroundType)
           }
         >
-          <TabsList className="mb-2 w-full">
+          <TabsList className="mb-3 w-full">
             <TabsTrigger value="color">Color</TabsTrigger>
             <TabsTrigger value="gradient">Gradient</TabsTrigger>
             <TabsTrigger value="image">Image</TabsTrigger>
@@ -286,7 +286,8 @@ export default function AppearanceSettings() {
         </Tabs>
       </SettingsSection>
       <SettingsSection title="Fonts">
-        <FontSelect />
+        <FontSelect label="Clock" id="clock-font" setting="clockFontFamily" />
+        <FontSelect label="Date" id="date-font" setting="dateFontFamily" />
       </SettingsSection>
       <SettingsSection
         title="Custom CSS"
