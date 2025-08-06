@@ -1,7 +1,7 @@
 "use client";
 
-import { ClockDisplay } from "@/components/clock-display";
-import FloatingButtons from "@/components/floating-buttons";
+import { ClockDisplay } from "@/components/home/clock-display";
+import FloatingButtons from "@/components/home/floating-buttons";
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useApplyTheme } from "@/hooks/use-apply-theme";
 import { useTheme } from "next-themes";
