@@ -58,7 +58,7 @@ export function SettingsSheet({ children }: SettingsSheetProps) {
           <Tabs
             value={settingTab}
             onValueChange={setSettingTab}
-            className="gap-3"
+            className="gap-5"
           >
             <TabsList className="w-full">
               {settingsTabs.map((tab) => (
@@ -72,7 +72,7 @@ export function SettingsSheet({ children }: SettingsSheetProps) {
               <TabsContent
                 key={tab.value}
                 value={tab.value}
-                className="grid flex-1 auto-rows-min gap-3"
+                className="grid flex-1 auto-rows-min gap-4"
               >
                 {tab.component}
               </TabsContent>

@@ -14,7 +14,7 @@ export default function ColorInput({
   onValueChange,
 }: ColorInputProps) {
   return (
-    <div className="my-1 flex items-center gap-3">
+    <div className="my-1 flex w-full items-center gap-3">
       <div className="ring-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 relative flex h-10 w-10 items-center justify-center rounded-full transition focus-within:ring-[3px]">
         <input
           type="color"

@@ -194,7 +194,7 @@ export default function AppearanceSettings() {
             <TabsTrigger value="image">Image</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="color" className="flex justify-evenly">
+          <TabsContent value="color" className="grid gap-4">
             <ColorInput
               id="background-color-light"
               label="Light Theme Color"
