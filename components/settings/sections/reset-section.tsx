@@ -1,10 +1,9 @@
 "use client";
 
-import { useClockSettings } from "@/context/clock-settings-context";
-import { toast } from "sonner";
-import SettingsSection from "../ui/settings-section";
-import { ConfirmationDialog } from "../ui/confirmation-dialog";
 import { Button } from "@/components/ui/button";
+import { useClockSettings } from "@/context/clock-settings-context";
+import { ConfirmationDialog } from "../ui/confirmation-dialog";
+import SettingsSection from "../ui/settings-section";
 
 export default function ResetSection() {
   const { resetSettings } = useClockSettings();
@@ -20,7 +19,6 @@ export default function ResetSection() {
           trigger={<Button>Reset to Defaults</Button>}
           onConfirm={() => {
             resetSettings();
-            toast("Settings reset to defaults.");
             window.location.reload();
           }}
           confirmText="Reset"
