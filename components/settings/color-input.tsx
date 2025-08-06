@@ -14,10 +14,8 @@ export default function ColorInput({
   onValueChange,
 }: ColorInputProps) {
   return (
-    <div className="flex flex-col items-center justify-between gap-2">
-      <Label htmlFor={id}>{label}</Label>
-
-      <div className="ring-muted-foreground relative m-2 flex h-10 w-10 items-center justify-center rounded-full ring-2 ring-offset-3 transition focus-within:ring-3">
+    <div className="my-1 flex items-center gap-3">
+      <div className="ring-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 relative flex h-10 w-10 items-center justify-center rounded-full transition focus-within:ring-[3px]">
         <input
           type="color"
           id={id}
@@ -31,6 +29,12 @@ export default function ColorInput({
           style={{ backgroundColor: value }}
           className="h-full w-full rounded-full shadow-sm"
         ></div>
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor={id}>{label}</Label>
+        <Label htmlFor={id} className="font-bold">
+          {value}
+        </Label>
       </div>
     </div>
   );

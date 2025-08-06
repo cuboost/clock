@@ -71,30 +71,28 @@ export default function AppearanceSettings() {
       </SettingsSection>
 
       <SettingsSection title="Clock">
-        <div className="flex justify-evenly">
-          <ColorInput
-            id="clock-color-light"
-            label="Light Theme Color"
-            value={settings.clockColorValues.light}
-            onValueChange={(value) =>
-              updateSetting("clockColorValues", {
-                light: value,
-                dark: settings.clockColorValues.dark,
-              })
-            }
-          />
-          <ColorInput
-            id="clock-color-dark"
-            label="Dark Theme Color"
-            value={settings.clockColorValues.dark}
-            onValueChange={(value) =>
-              updateSetting("clockColorValues", {
-                light: settings.clockColorValues.light,
-                dark: value,
-              })
-            }
-          />
-        </div>
+        <ColorInput
+          id="clock-color-light"
+          label="Light Theme Color"
+          value={settings.clockColorValues.light}
+          onValueChange={(value) =>
+            updateSetting("clockColorValues", {
+              light: value,
+              dark: settings.clockColorValues.dark,
+            })
+          }
+        />
+        <ColorInput
+          id="clock-color-dark"
+          label="Dark Theme Color"
+          value={settings.clockColorValues.dark}
+          onValueChange={(value) =>
+            updateSetting("clockColorValues", {
+              light: settings.clockColorValues.light,
+              dark: value,
+            })
+          }
+        />
         <SliderInput
           id="clock-size"
           label="Clock Size"
@@ -223,7 +221,7 @@ export default function AppearanceSettings() {
 
           <TabsContent value="gradient"></TabsContent>
 
-          <TabsContent value="image" className="space-y-4">
+          <TabsContent value="image" className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="image-link">Image Link</Label>
               <Input

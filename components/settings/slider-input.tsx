@@ -25,7 +25,7 @@ export default function SliderInput({
   defaultValue = 0,
 }: SliderInputProps) {
   return (
-    <div className="flex w-full items-center justify-center gap-3">
+    <div className="my-1 flex w-full items-center justify-center gap-3">
       {icon && (
         <Label
           htmlFor={id}
