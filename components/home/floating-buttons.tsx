@@ -11,10 +11,12 @@ function AnimatedFloatingButton({
   icon,
   label,
   onClick,
+  onMouseEnter,
 }: {
   icon: React.ReactNode;
   label: string;
   onClick?: () => void;
+  onMouseEnter?: () => void;
 }) {
   const settingsColor = useThemeColor("clock");
   const iconWidth = 36;
@@ -44,6 +46,8 @@ function AnimatedFloatingButton({
         className="flex items-center gap-2 p-2"
         style={{ color: settingsColor }}
         onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onFocus={onMouseEnter}
       >
         {icon}
         <motion.span
@@ -85,7 +89,11 @@ export default function FloatingButtons() {
       )}
     >
       <SettingsSheet>
-        <AnimatedFloatingButton icon={<Settings2 />} label="Settings" />
+        <AnimatedFloatingButton
+          onMouseEnter={() => import("../settings/settings-sheet")}
+          icon={<Settings2 />}
+          label="Settings"
+        />
       </SettingsSheet>
 
       <AnimatedFloatingButton

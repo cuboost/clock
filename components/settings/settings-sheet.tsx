@@ -49,7 +49,7 @@ export function SettingsSheet({ children }: SettingsSheetProps) {
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
 
-      <SheetContent className="overflow-scroll">
+      <SheetContent className="overflow-scroll will-change-transform">
         <SheetHeader className="p-6 pb-0">
           <SheetTitle className="text-2xl">Settings</SheetTitle>
         </SheetHeader>
