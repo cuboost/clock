@@ -27,6 +27,7 @@ import SliderInput from "./slider-input";
 import ThemeButton from "./theme-button";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { FontSelect } from "./font-select";
 
 export default function AppearanceSettings() {
   const { settings, updateSetting } = useClockSettings();
@@ -283,6 +284,9 @@ export default function AppearanceSettings() {
             />
           </TabsContent>
         </Tabs>
+      </SettingsSection>
+      <SettingsSection title="Fonts">
+        <FontSelect />
       </SettingsSection>
       <SettingsSection
         title="Custom CSS"

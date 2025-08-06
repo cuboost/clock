@@ -110,7 +110,10 @@ export function ClockDisplay() {
       >
         <h1
           className="flex items-center justify-center tracking-widest tabular-nums select-none"
-          style={{ fontSize: settings.clockSize }}
+          style={{
+            fontSize: settings.clockSize,
+            fontFamily: settings.clockFontFamily,
+          }}
         >
           {settings.twelveHourFormat ? time.amPmHours : time.hours}:
           {time.minutes}

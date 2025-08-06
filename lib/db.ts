@@ -67,7 +67,7 @@ export interface ClockSettings {
     preset: ClockPositionType;
     custom: { x: number; y: number };
   };
-  // clockFontFamily: string;
+  clockFontFamily: string;
   // clockFontWeight: string;
   clockSize: number;
 }
