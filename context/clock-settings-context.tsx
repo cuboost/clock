@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { db, ClockSettings } from "@/lib/db";
 import { toast } from "sonner";
 
-const DEFAULT_SETTINGS: ClockSettings = {
+export const DEFAULT_SETTINGS: ClockSettings = {
   id: "settings",
   showSeconds: true,
   twelveHourFormat: false,
@@ -26,6 +26,7 @@ const DEFAULT_SETTINGS: ClockSettings = {
   theme: "default",
   clockPosition: { preset: "center", custom: { x: 0, y: 0 } },
   clockSize: 70,
+  dateSize: 25,
   clockFontFamily: "",
   dateFontFamily: "",
 };

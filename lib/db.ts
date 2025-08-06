@@ -71,6 +71,7 @@ export interface ClockSettings {
   dateFontFamily: string;
   // clockFontWeight: string;
   clockSize: number;
+  dateSize: number;
 }
 
 class ClockAppDB extends Dexie {

@@ -1,8 +1,13 @@
-import { useClockSettings } from "@/context/clock-settings-context";
+import {
+  DEFAULT_SETTINGS,
+  useClockSettings,
+} from "@/context/clock-settings-context";
 import { positionClasses } from "@/lib/clock-positions";
 import { BackgroundType, ClockPositionType, themes } from "@/lib/db";
-import { Contrast, Focus, Ruler, SunMedium } from "lucide-react";
+import { Calendar, Clock, Contrast, Focus, SunMedium } from "lucide-react";
+import { useState } from "react";
 import { ThemeToggle } from "../theme/theme-toggle";
+import { Button } from "../ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -22,12 +27,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
 import ColorInput from "./color-input";
+import { FontSelect } from "./font-select";
 import SettingsSection from "./settings-section";
 import SliderInput from "./slider-input";
 import ThemeButton from "./theme-button";
-import { Button } from "../ui/button";
-import { useState } from "react";
-import { FontSelect } from "./font-select";
 
 export default function AppearanceSettings() {
   const { settings, updateSetting } = useClockSettings();
@@ -100,8 +103,18 @@ export default function AppearanceSettings() {
           min={20}
           max={300}
           value={settings.clockSize}
-          icon={<Ruler />}
-          defaultValue={70}
+          icon={<Clock />}
+          defaultValue={DEFAULT_SETTINGS.clockSize}
+        />
+        <SliderInput
+          id="date-size"
+          label="Date Size"
+          onValueChange={(value) => updateSetting("dateSize", value)}
+          min={10}
+          max={300}
+          value={settings.dateSize}
+          icon={<Calendar />}
+          defaultValue={DEFAULT_SETTINGS.dateSize}
         />
         <div className="grid gap-3">
           <Label htmlFor="clock-position">Position</Label>

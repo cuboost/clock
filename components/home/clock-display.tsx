@@ -141,9 +141,9 @@ export function ClockDisplay() {
 
         {settings.showDate && (
           <h2
-            className="tracking-wider"
+            className="tracking-wider select-none"
             style={{
-              // fontSize: settings.clockSize,
+              fontSize: settings.dateSize,
               fontFamily: settings.dateFontFamily,
             }}
           >
