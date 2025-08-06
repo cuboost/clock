@@ -39,6 +39,7 @@ export interface ClockSettings {
   showSeconds: boolean;
   twelveHourFormat: boolean;
   showAmPm: boolean;
+  AmPmUnderSeconds: boolean;
   showDate: boolean;
   showTimeInTab: boolean;
   customTabTitle: string;

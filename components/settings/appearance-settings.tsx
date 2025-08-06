@@ -193,7 +193,6 @@ export default function AppearanceSettings() {
             <TabsTrigger value="color">Color</TabsTrigger>
             <TabsTrigger value="gradient">Gradient</TabsTrigger>
             <TabsTrigger value="image">Image</TabsTrigger>
-            <TabsTrigger value="custom">Custom</TabsTrigger>
           </TabsList>
 
           <TabsContent value="color" className="flex justify-evenly">

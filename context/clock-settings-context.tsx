@@ -9,6 +9,7 @@ const DEFAULT_SETTINGS: ClockSettings = {
   showSeconds: true,
   twelveHourFormat: false,
   showAmPm: false,
+  AmPmUnderSeconds: true,
   showDate: true,
   showTimeInTab: true,
   customTabTitle: "Clock",

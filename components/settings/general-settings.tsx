@@ -36,6 +36,14 @@ export default function GeneralSettings() {
           checked={settings.showAmPm}
           onChange={(value) => updateSetting("showAmPm", value)}
         />
+        {settings.showAmPm && settings.showSeconds && (
+          <SwitchInput
+            id="am-pm-under-seconds"
+            label="AM/PM Under Seconds"
+            checked={settings.AmPmUnderSeconds}
+            onChange={(value) => updateSetting("AmPmUnderSeconds", value)}
+          />
+        )}
       </SettingsSection>
 
       <SettingsSection title="Tab">

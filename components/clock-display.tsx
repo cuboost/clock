@@ -109,13 +109,31 @@ export function ClockDisplay() {
         )}
       >
         <h1
-          className="tracking-widest tabular-nums select-none"
+          className="flex items-center justify-center tracking-widest tabular-nums select-none"
           style={{ fontSize: settings.clockSize }}
         >
           {settings.twelveHourFormat ? time.amPmHours : time.hours}:
           {time.minutes}
-          {settings.showSeconds && `:${time.seconds}`}
-          {settings.showAmPm && ` ${time.amPm}`}
+          {settings.showSeconds &&
+            !(settings.AmPmUnderSeconds && settings.showAmPm) &&
+            `:${time.seconds}`}
+          {settings.showAmPm && !settings.AmPmUnderSeconds && ` ${time.amPm}`}
+          {settings.showAmPm && settings.AmPmUnderSeconds && (
+            <div
+              className={cn(
+                "flex h-full flex-col leading-none",
+                settings.AmPmUnderSeconds &&
+                  settings.showSeconds &&
+                  "text-[40%]",
+              )}
+              style={{
+                marginLeft: `calc(${settings.clockSize}rem * 0.013)`,
+              }}
+            >
+              {settings.showSeconds && <span>{time.seconds}</span>}
+              <span>{time.amPm}</span>
+            </div>
+          )}
         </h1>
 
         {settings.showDate && <h2 className="tracking-wider">{displayDate}</h2>}
