@@ -2,12 +2,15 @@ import { useClockSettings } from "@/context/clock-settings-context";
 import { ThemeType } from "@/lib/db";
 import { THEME_COLORS } from "@/lib/theme-colors";
 import { Button } from "../ui/button";
-type ThemeButtonProps = {
+type AccentColorButtonProps = {
   label: string;
   themeName: ThemeType;
 };
 
-export default function ThemeButton({ label, themeName }: ThemeButtonProps) {
+export default function AccentColorButton({
+  label,
+  themeName,
+}: AccentColorButtonProps) {
   const { settings, updateSettings } = useClockSettings();
   const isActive = settings.theme === themeName;
 

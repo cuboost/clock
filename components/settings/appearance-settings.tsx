@@ -26,11 +26,11 @@ import {
 } from "../ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
+import AccentColorButton from "./accent-color-button";
 import ColorInput from "./color-input";
 import { FontSelect } from "./font-select";
 import SettingsSection from "./settings-section";
 import SliderInput from "./slider-input";
-import ThemeButton from "./theme-button";
 
 export default function AppearanceSettings() {
   const { settings, updateSetting } = useClockSettings();
@@ -59,7 +59,7 @@ export default function AppearanceSettings() {
                 key={theme}
                 className="xs:basis-1/4 xxs:basis-1/3 my-2 flex basis-1/2 items-center justify-center"
               >
-                <ThemeButton
+                <AccentColorButton
                   label={
                     theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"
                   }
@@ -73,7 +73,7 @@ export default function AppearanceSettings() {
         </Carousel>
         <div className="hidden w-full grid-cols-3 justify-items-center gap-4 sm:grid sm:grid-cols-4">
           {themes.map((theme) => (
-            <ThemeButton
+            <AccentColorButton
               key={theme}
               label={theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"}
               themeName={theme}
