@@ -104,50 +104,54 @@ export default function AppearanceSettings() {
           icon={<Ruler />}
           defaultValue={70}
         />
-        <Select
-          value={settings.clockPosition.preset}
-          onValueChange={(value) => {
-            if (value === "custom") {
-              updateSetting("clockPosition", {
-                preset: "custom",
-                custom:
-                  settings.clockPosition.preset === "custom"
-                    ? settings.clockPosition.custom
-                    : { x: 0, y: 0 },
-              });
-            } else {
-              updateSetting(
-                "clockPosition",
-                value === "custom"
-                  ? {
-                      preset: "custom",
-                      custom:
-                        settings.clockPosition.preset === "custom"
-                          ? settings.clockPosition.custom
-                          : { x: 0, y: 0 },
-                    }
-                  : {
-                      preset: value as ClockPositionType,
-                      custom: { x: 0, y: 0 },
-                    },
-              );
-            }
-          }}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Position" />
-          </SelectTrigger>
-          <SelectContent>
-            {clockPositions.map((pos) => (
-              <SelectItem key={pos} value={pos}>
-                {pos
-                  .split("-")
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(" ")}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="grid gap-2">
+          <Label htmlFor="clock-position">Position</Label>
+          <Select
+            value={settings.clockPosition.preset}
+            onValueChange={(value) => {
+              if (value === "custom") {
+                updateSetting("clockPosition", {
+                  preset: "custom",
+                  custom:
+                    settings.clockPosition.preset === "custom"
+                      ? settings.clockPosition.custom
+                      : { x: 0, y: 0 },
+                });
+              } else {
+                updateSetting(
+                  "clockPosition",
+                  value === "custom"
+                    ? {
+                        preset: "custom",
+                        custom:
+                          settings.clockPosition.preset === "custom"
+                            ? settings.clockPosition.custom
+                            : { x: 0, y: 0 },
+                      }
+                    : {
+                        preset: value as ClockPositionType,
+                        custom: { x: 0, y: 0 },
+                      },
+                );
+              }
+            }}
+          >
+            <SelectTrigger id="clock-position">
+              <SelectValue placeholder="Position" />
+            </SelectTrigger>
+            <SelectContent>
+              {clockPositions.map((pos) => (
+                <SelectItem key={pos} value={pos}>
+                  {pos
+                    .split("-")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
         {settings.clockPosition.preset === "custom" && (
           <div className="flex items-center justify-center gap-4">
             {axes.map((axis) => (
