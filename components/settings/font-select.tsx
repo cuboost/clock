@@ -60,7 +60,7 @@ export function FontSelect({ label, id, setting }: FontSelectProps) {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-full justify-between"
             id={id}
           >
             <span style={{ fontFamily: selectedFont.value }}>
@@ -70,7 +70,7 @@ export function FontSelect({ label, id, setting }: FontSelectProps) {
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-full p-0">
           <Command>
             <CommandInput placeholder="Search font..." className="h-9" />
             <CommandList>
