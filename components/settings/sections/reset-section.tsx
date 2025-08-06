@@ -1,10 +1,10 @@
 "use client";
 
 import { useClockSettings } from "@/context/clock-settings-context";
-import { Button } from "../ui/button";
-import { ConfirmationDialog } from "./confirmation-dialog";
-import SettingsSection from "./settings-section";
 import { toast } from "sonner";
+import SettingsSection from "../ui/settings-section";
+import { ConfirmationDialog } from "../ui/confirmation-dialog";
+import { Button } from "@/components/ui/button";
 
 export default function ResetSection() {
   const { resetSettings } = useClockSettings();

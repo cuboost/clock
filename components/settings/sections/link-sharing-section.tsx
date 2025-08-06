@@ -2,9 +2,9 @@ import { useClockSettings } from "@/context/clock-settings-context";
 import { Copy } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import SettingsSection from "./settings-section";
+import SettingsSection from "../ui/settings-section";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function LinkSharingSection() {
   const { generateShareLink } = useClockSettings();
