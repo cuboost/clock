@@ -1,5 +1,5 @@
-import { Label } from "../ui/label";
-import { Slider } from "../ui/slider";
+import { Label } from "../../ui/label";
+import { Slider } from "../../ui/slider";
 
 type SliderInputProps = {
   id: string;

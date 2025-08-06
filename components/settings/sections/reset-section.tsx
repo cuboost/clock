@@ -6,7 +6,7 @@ import { ConfirmationDialog } from "./confirmation-dialog";
 import SettingsSection from "./settings-section";
 import { toast } from "sonner";
 
-export default function Reset() {
+export default function ResetSection() {
   const { resetSettings } = useClockSettings();
   return (
     <>

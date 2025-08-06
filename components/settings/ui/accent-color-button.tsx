@@ -1,7 +1,7 @@
 import { useClockSettings } from "@/context/clock-settings-context";
 import { ThemeType } from "@/lib/db";
 import { THEME_COLORS } from "@/lib/theme-colors";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { cn } from "@/lib/utils";
 type AccentColorButtonProps = {
   label: string;

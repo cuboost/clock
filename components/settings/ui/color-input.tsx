@@ -1,4 +1,4 @@
-import { Label } from "../ui/label";
+import { Label } from "../../ui/label";
 
 type ColorInputProps = {
   id: string;

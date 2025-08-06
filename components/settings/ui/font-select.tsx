@@ -17,7 +17,7 @@ import {
 import { useState } from "react";
 import { useClockSettings } from "@/context/clock-settings-context";
 import { ClockSettings } from "@/lib/db";
-import { Label } from "../ui/label";
+import { Label } from "../../ui/label";
 
 const fonts = [
   { label: "Geist Sans (Default)", value: "" },

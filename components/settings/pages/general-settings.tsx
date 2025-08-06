@@ -1,13 +1,18 @@
 import { useClockSettings } from "@/context/clock-settings-context";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import SettingsSection from "./settings-section";
-import { SwitchInput } from "./switch-input";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import SettingsSection from "../ui/settings-section";
+import { SwitchInput } from "../ui/switch-input";
+import { ThemeToggle } from "../../theme/theme-toggle";
 
 export default function GeneralSettings() {
   const { settings, updateSetting } = useClockSettings();
   return (
     <>
+      <SettingsSection title="Theme">
+        <ThemeToggle />
+      </SettingsSection>
+
       <SettingsSection title="Elements">
         <SwitchInput
           id="show-seconds"

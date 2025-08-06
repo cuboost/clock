@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import SettingsSection from "./settings-section";
 
-export default function LinkSharing() {
+export default function LinkSharingSection() {
   const { generateShareLink } = useClockSettings();
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
