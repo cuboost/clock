@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 import { Maximize2, Minimize2, Settings2 } from "lucide-react";
 import { useState } from "react";
 import { SettingsSheet } from "./settings/settings-sheet";
+import { useInactivity } from "@/hooks/use-inactivity";
+import { cn } from "@/lib/utils";
 
 export default function FloatingButtons() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const settingsColor = useThemeColor("clock");
+  const isInactive = useInactivity(3000);
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -27,7 +30,12 @@ export default function FloatingButtons() {
   };
 
   return (
-    <div className="absolute right-4 bottom-4 flex items-center justify-end">
+    <div
+      className={cn(
+        "absolute right-4 bottom-4 flex items-center justify-end transition duration-500",
+        isInactive ? "pointer-events-none opacity-0" : "opacity-100",
+      )}
+    >
       <SettingsSheet>
         <motion.div
           className="flex items-center overflow-hidden"
