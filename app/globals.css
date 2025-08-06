@@ -87,6 +87,8 @@
 @theme {
   --animate-crazy-clock: crazy-clock 3s infinite ease-in-out;
   --animate-glitch-text: glitch-text 1.2s infinite;
+  --breakpoint-xs: 30rem;
+  --breakpoint-xxs: 20rem;
 }
 
 input[type="number"] {

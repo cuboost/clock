@@ -1,6 +1,7 @@
 import { useClockSettings } from "@/context/clock-settings-context";
 import { ThemeType } from "@/lib/db";
 import { THEME_COLORS } from "@/lib/theme-colors";
+import { Button } from "../ui/button";
 type ThemeButtonProps = {
   label: string;
   themeName: ThemeType;
@@ -22,14 +23,14 @@ export default function ThemeButton({ label, themeName }: ThemeButtonProps) {
   }
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="ghost"
       onClick={handleThemeChange}
       aria-label={label}
-      className={`ring-muted-foreground relative m-2 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full ring-offset-3 transition focus:outline-none focus-visible:ring-3 ${isActive ? "ring-3" : "ring-2"}`}
+      className={`focus-visible:border-ring focus-visible:ring-ring/50 relative flex h-10 w-10 items-center justify-center rounded-full transition focus-within:ring-[3px] ${isActive ? "ring-3" : ""}`}
       style={{ backgroundColor: THEME_COLORS[themeName] }}
     >
       <span className="sr-only">{label}</span>
-    </button>
+    </Button>
   );
 }

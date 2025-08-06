@@ -51,13 +51,13 @@ export default function AppearanceSettings() {
             align: "start",
             slidesToScroll: 3,
           }}
-          className="mx-auto w-full max-w-52"
+          className="relative w-full overflow-hidden px-10 sm:hidden"
         >
           <CarouselContent>
             {themes.map((theme) => (
               <CarouselItem
                 key={theme}
-                className="flex basis-1/3 items-center justify-center"
+                className="xs:basis-1/4 xxs:basis-1/3 my-2 flex basis-1/2 items-center justify-center"
               >
                 <ThemeButton
                   label={
@@ -68,9 +68,18 @@ export default function AppearanceSettings() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="absolute left-0" />
+          <CarouselNext className="absolute right-0" />
         </Carousel>
+        <div className="hidden w-full grid-cols-3 justify-items-center gap-4 sm:grid sm:grid-cols-4">
+          {themes.map((theme) => (
+            <ThemeButton
+              key={theme}
+              label={theme.charAt(0).toUpperCase() + theme.slice(1) + " Theme"}
+              themeName={theme}
+            />
+          ))}
+        </div>
       </SettingsSection>
 
       <SettingsSection title="Clock">
