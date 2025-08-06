@@ -135,7 +135,7 @@ export default function AppearanceSettings() {
               }
             }}
           >
-            <SelectTrigger id="clock-position">
+            <SelectTrigger id="clock-position" className="w-full">
               <SelectValue placeholder="Position" />
             </SelectTrigger>
             <SelectContent>
