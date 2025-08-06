@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Maximize2, Minimize2, Settings2 } from "lucide-react";
 import { SettingsSheet } from "@/components/settings/settings-sheet";
@@ -29,33 +29,41 @@ function AnimatedFloatingButton({
     }
   }, [label]);
 
+  const [expanded, setExpanded] = useState(false);
+
+  const handleMouseEnter = () => {
+    setExpanded(true);
+    if (onMouseEnter) onMouseEnter();
+  };
+
   return (
     <motion.div
       className="flex cursor-pointer items-center overflow-hidden"
-      initial="initial"
-      whileHover="hover"
-      animate="initial"
+      initial="collapsed"
+      animate={expanded ? "expanded" : "collapsed"}
       variants={{
-        initial: { width: iconWidth },
-        hover: { width },
+        collapsed: { width: iconWidth },
+        expanded: { width },
       }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
       <Button
         variant="ghost"
-        className="flex items-center gap-2 p-2"
-        style={{ color: settingsColor }}
+        className="dark:focus-visible:bg-input/50 focus-visible:bg-accent flex items-center gap-2 p-2 focus-visible:ring-0"
         onClick={onClick}
-        onMouseEnter={onMouseEnter}
-        onFocus={onMouseEnter}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => setExpanded(false)}
+        onFocus={handleMouseEnter}
+        onBlur={() => setExpanded(false)}
+        style={{ color: settingsColor }}
       >
         {icon}
         <motion.span
           ref={textRef}
           className="whitespace-nowrap"
           variants={{
-            initial: { opacity: 0 },
-            hover: { opacity: 1 },
+            // initial: { opacity: 0 },
+            expanded: { opacity: 1 },
           }}
         >
           {label}
@@ -67,7 +75,7 @@ function AnimatedFloatingButton({
 
 export default function FloatingButtons() {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const isInactive = useInactivity(3000);
+  const isInactive = useInactivity(5000);
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
