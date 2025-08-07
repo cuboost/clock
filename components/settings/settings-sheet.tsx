@@ -8,14 +8,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useClockSettings } from "@/context/clock-settings-context";
-import AppearanceSettings from "./appearance-settings";
-import GeneralSettings from "./general-settings";
-import MoreSettings from "./more-settings";
+import AppearanceSettings from "./pages/appearance-settings";
+import GeneralSettings from "./pages/general-settings";
+import MoreSettings from "./pages/more-settings";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useState } from "react";
 
 type SettingsSheetProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 // Define an array of tab objects without a separate 'label' property
@@ -34,7 +36,11 @@ const settingsTabs = [
   },
 ];
 
-export function SettingsSheet({ children }: SettingsSheetProps) {
+export function SettingsSheet({
+  children,
+  open,
+  onOpenChange,
+}: SettingsSheetProps) {
   const { loading } = useClockSettings();
   const [settingTab, setSettingTab] = useState("general");
 
@@ -46,10 +52,10 @@ export function SettingsSheet({ children }: SettingsSheetProps) {
   };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>{children}</SheetTrigger>
 
-      <SheetContent className="overflow-scroll">
+      <SheetContent className="overflow-scroll will-change-transform">
         <SheetHeader className="p-6 pb-0">
           <SheetTitle className="text-2xl">Settings</SheetTitle>
         </SheetHeader>
@@ -58,7 +64,7 @@ export function SettingsSheet({ children }: SettingsSheetProps) {
           <Tabs
             value={settingTab}
             onValueChange={setSettingTab}
-            className="gap-3"
+            className="gap-5"
           >
             <TabsList className="w-full">
               {settingsTabs.map((tab) => (
@@ -72,7 +78,7 @@ export function SettingsSheet({ children }: SettingsSheetProps) {
               <TabsContent
                 key={tab.value}
                 value={tab.value}
-                className="grid flex-1 auto-rows-min gap-3"
+                className="grid flex-1 auto-rows-min gap-4"
               >
                 {tab.component}
               </TabsContent>

@@ -68,8 +68,10 @@ export interface ClockSettings {
     custom: { x: number; y: number };
   };
   clockFontFamily: string;
+  dateFontFamily: string;
   // clockFontWeight: string;
   clockSize: number;
+  dateSize: number;
 }
 
 class ClockAppDB extends Dexie {

@@ -1,20 +1,23 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Maximize2, Minimize2, Settings2 } from "lucide-react";
 import { SettingsSheet } from "@/components/settings/settings-sheet";
 import { useThemeColor } from "@/hooks/use-theme-color";
 import { useInactivity } from "@/hooks/use-inactivity";
 import { cn } from "@/lib/utils";
+import { useFullscreen } from "@/context/fullscreen-context";
 
 function AnimatedFloatingButton({
   icon,
   label,
   onClick,
+  onMouseEnter,
 }: {
   icon: React.ReactNode;
   label: string;
   onClick?: () => void;
+  onMouseEnter?: () => void;
 }) {
   const settingsColor = useThemeColor("clock");
   const iconWidth = 36;
@@ -27,31 +30,41 @@ function AnimatedFloatingButton({
     }
   }, [label]);
 
+  const [expanded, setExpanded] = useState(false);
+
+  const handleMouseEnter = () => {
+    setExpanded(true);
+    if (onMouseEnter) onMouseEnter();
+  };
+
   return (
     <motion.div
       className="flex cursor-pointer items-center overflow-hidden"
-      initial="initial"
-      whileHover="hover"
-      animate="initial"
+      initial="collapsed"
+      animate={expanded ? "expanded" : "collapsed"}
       variants={{
-        initial: { width: iconWidth },
-        hover: { width },
+        collapsed: { width: iconWidth },
+        expanded: { width },
       }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
       <Button
         variant="ghost"
-        className="flex items-center gap-2 p-2"
-        style={{ color: settingsColor }}
+        className="dark:focus-visible:bg-input/50 focus-visible:bg-accent flex items-center gap-2 p-2 focus-visible:ring-0"
         onClick={onClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => setExpanded(false)}
+        onFocus={handleMouseEnter}
+        onBlur={() => setExpanded(false)}
+        style={{ color: settingsColor }}
       >
         {icon}
         <motion.span
           ref={textRef}
           className="whitespace-nowrap"
           variants={{
-            initial: { opacity: 0 },
-            hover: { opacity: 1 },
+            // initial: { opacity: 0 },
+            expanded: { opacity: 1 },
           }}
         >
           {label}
@@ -62,20 +75,10 @@ function AnimatedFloatingButton({
 }
 
 export default function FloatingButtons() {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const isInactive = useInactivity(3000);
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
+  const isInactive = useInactivity(5000);
 
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().then(() => {
-        setIsFullscreen(true);
-      });
-    } else {
-      document.exitFullscreen().then(() => {
-        setIsFullscreen(false);
-      });
-    }
-  };
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
     <div
@@ -84,9 +87,14 @@ export default function FloatingButtons() {
         isInactive ? "pointer-events-none opacity-0" : "opacity-100",
       )}
     >
-      <SettingsSheet>
-        <AnimatedFloatingButton icon={<Settings2 />} label="Settings" />
-      </SettingsSheet>
+      <AnimatedFloatingButton
+        onMouseEnter={() => import("../settings/settings-sheet")}
+        onClick={() => setSettingsOpen(true)}
+        icon={<Settings2 />}
+        label="Settings"
+      />
+
+      <SettingsSheet open={settingsOpen} onOpenChange={setSettingsOpen} />
 
       <AnimatedFloatingButton
         icon={isFullscreen ? <Minimize2 /> : <Maximize2 />}

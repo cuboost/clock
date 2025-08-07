@@ -4,6 +4,8 @@ import "./globals.css";
 import { ClockSettingsProvider } from "@/context/clock-settings-context";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "sonner";
+import ContextMenuHome from "@/components/home/context-menu-home";
+import { FullscreenProvider } from "@/context/fullscreen-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClockSettingsProvider>{children}</ClockSettingsProvider>
+          <ClockSettingsProvider>
+            <FullscreenProvider>
+              <ContextMenuHome>{children}</ContextMenuHome>
+            </FullscreenProvider>
+          </ClockSettingsProvider>
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>

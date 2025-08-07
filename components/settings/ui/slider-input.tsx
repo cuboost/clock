@@ -1,5 +1,5 @@
-import { Label } from "../ui/label";
-import { Slider } from "../ui/slider";
+import { Label } from "../../ui/label";
+import { Slider } from "../../ui/slider";
 
 type SliderInputProps = {
   id: string;
@@ -25,11 +25,11 @@ export default function SliderInput({
   defaultValue = 0,
 }: SliderInputProps) {
   return (
-    <div className="flex w-full items-center justify-center gap-3">
+    <div className="my-1 flex w-full items-center justify-center gap-3">
       {icon && (
         <Label
           htmlFor={id}
-          className="bg-muted hover:bg-muted/80 cursor-pointer rounded-full p-2 transition-colors"
+          className="bg-muted hover:bg-muted/80 cursor-pointer rounded-full p-2 shadow-xs transition-colors"
           onClick={() => onValueChange(defaultValue)}
         >
           {icon}
