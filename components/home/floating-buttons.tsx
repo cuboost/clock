@@ -6,6 +6,7 @@ import { SettingsSheet } from "@/components/settings/settings-sheet";
 import { useThemeColor } from "@/hooks/use-theme-color";
 import { useInactivity } from "@/hooks/use-inactivity";
 import { cn } from "@/lib/utils";
+import { useFullscreen } from "@/context/fullscreen-context";
 
 function AnimatedFloatingButton({
   icon,
@@ -74,20 +75,10 @@ function AnimatedFloatingButton({
 }
 
 export default function FloatingButtons() {
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
   const isInactive = useInactivity(5000);
 
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().then(() => {
-        setIsFullscreen(true);
-      });
-    } else {
-      document.exitFullscreen().then(() => {
-        setIsFullscreen(false);
-      });
-    }
-  };
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
     <div
@@ -96,13 +87,14 @@ export default function FloatingButtons() {
         isInactive ? "pointer-events-none opacity-0" : "opacity-100",
       )}
     >
-      <SettingsSheet>
-        <AnimatedFloatingButton
-          onMouseEnter={() => import("../settings/settings-sheet")}
-          icon={<Settings2 />}
-          label="Settings"
-        />
-      </SettingsSheet>
+      <AnimatedFloatingButton
+        onMouseEnter={() => import("../settings/settings-sheet")}
+        onClick={() => setSettingsOpen(true)}
+        icon={<Settings2 />}
+        label="Settings"
+      />
+
+      <SettingsSheet open={settingsOpen} onOpenChange={setSettingsOpen} />
 
       <AnimatedFloatingButton
         icon={isFullscreen ? <Minimize2 /> : <Maximize2 />}

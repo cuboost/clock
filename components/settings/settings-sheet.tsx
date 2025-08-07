@@ -15,7 +15,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useState } from "react";
 
 type SettingsSheetProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 // Define an array of tab objects without a separate 'label' property
@@ -34,7 +36,11 @@ const settingsTabs = [
   },
 ];
 
-export function SettingsSheet({ children }: SettingsSheetProps) {
+export function SettingsSheet({
+  children,
+  open,
+  onOpenChange,
+}: SettingsSheetProps) {
   const { loading } = useClockSettings();
   const [settingTab, setSettingTab] = useState("general");
 
@@ -46,7 +52,7 @@ export function SettingsSheet({ children }: SettingsSheetProps) {
   };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>{children}</SheetTrigger>
 
       <SheetContent className="overflow-scroll will-change-transform">
