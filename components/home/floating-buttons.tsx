@@ -76,7 +76,7 @@ function AnimatedFloatingButton({
   );
 }
 
-export default function FloatingButtons() {
+export function FloatingButtons() {
   const { isFullscreen, toggleFullscreen } = useFullscreen();
   const isInactive = useInactivity(5000);
 

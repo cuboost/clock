@@ -3,11 +3,7 @@
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useBackgroundStyle } from "@/hooks/use-background-style";
 
-export default function BackgroundWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function BackgroundWrapper({ children }: { children: React.ReactNode }) {
   const { settings } = useClockSettings();
   const backgroundStyle = useBackgroundStyle();
 

@@ -6,10 +6,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../ui/carousel";
-import AccentColorButton from "../ui/accent-color-button";
-import SettingsSection from "../ui/settings-section";
-
-export default function AccentColorSection() {
+import { AccentColorButton } from "../ui/accent-color-button";
+import { SettingsSection } from "../ui/settings-section";
+export function AccentColorSection() {
   return (
     <SettingsSection title="Accent Color">
       <Carousel

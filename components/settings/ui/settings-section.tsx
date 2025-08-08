@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "../../ui/card";
 
-export default function SettingsSection({
+export function SettingsSection({
   children,
   title,
   description,

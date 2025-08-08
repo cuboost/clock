@@ -1,6 +1,6 @@
-import ClockDisplay from "@/components/home/clock-display";
-import FloatingButtons from "@/components/home/floating-buttons";
-import BackgroundWrapper from "@/components/layout/background-wrapper";
+import { ClockDisplay } from "@/components/home/clock-display";
+import { FloatingButtons } from "@/components/home/floating-buttons";
+import { BackgroundWrapper } from "@/components/layout/background-wrapper";
 
 export default function Clock() {
   return (

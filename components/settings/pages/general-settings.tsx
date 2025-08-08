@@ -1,11 +1,11 @@
 import { useClockSettings } from "@/context/clock-settings-context";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
-import SettingsSection from "../ui/settings-section";
 import { SwitchInput } from "../ui/switch-input";
 import { ThemeToggle } from "../../theme/theme-toggle";
+import { SettingsSection } from "../ui/settings-section";
 
-export default function GeneralSettings() {
+export function GeneralSettings() {
   const { settings, updateSetting } = useClockSettings();
   return (
     <>

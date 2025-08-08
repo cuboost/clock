@@ -4,8 +4,8 @@ import "./globals.css";
 import { ClockSettingsProvider } from "@/context/clock-settings-context";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "sonner";
-import ContextMenuHome from "@/components/home/context-menu-home";
 import { FullscreenProvider } from "@/context/fullscreen-context";
+import { ContextMenuHome } from "@/components/home/context-menu-home";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

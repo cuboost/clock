@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-export default function ClockDisplay() {
+export function ClockDisplay() {
   const time = useClock();
   const { settings, loading, updateSetting } = useClockSettings();
   const clockColor = useThemeColor("clock");

@@ -1,7 +1,7 @@
 import { FontSelect } from "../ui/font-select";
-import SettingsSection from "../ui/settings-section";
+import { SettingsSection } from "../ui/settings-section";
 
-export default function FontsSection() {
+export function FontsSection() {
   return (
     <SettingsSection title="Fonts">
       <FontSelect label="Clock" id="clock-font" setting="clockFontFamily" />

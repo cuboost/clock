@@ -1,14 +1,14 @@
-import { BackgroundType } from "@/lib/db";
-import { Focus, SunMedium, Contrast } from "lucide-react";
-import { Input } from "../../ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
-import ColorInput from "../ui/color-input";
-import SettingsSection from "../ui/settings-section";
-import SliderInput from "../ui/slider-input";
-import { Label } from "../../ui/label";
 import { useClockSettings } from "@/context/clock-settings-context";
+import { BackgroundType } from "@/lib/db";
+import { Contrast, Focus, SunMedium } from "lucide-react";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import { ColorInput } from "../ui/color-input";
+import { SettingsSection } from "../ui/settings-section";
+import { SliderInput } from "../ui/slider-input";
 
-export default function BackgroundSection() {
+export function BackgroundSection() {
   const { settings, updateSetting } = useClockSettings();
 
   return (

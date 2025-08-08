@@ -7,7 +7,7 @@ type ColorInputProps = {
   onValueChange: (value: string) => void;
 };
 
-export default function ColorInput({
+export function ColorInput({
   id,
   label,
   value,

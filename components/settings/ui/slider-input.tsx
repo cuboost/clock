@@ -13,7 +13,7 @@ type SliderInputProps = {
   defaultValue?: number;
 };
 
-export default function SliderInput({
+export function SliderInput({
   id,
   label,
   value,
