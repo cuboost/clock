@@ -1,3 +1,5 @@
+"use client";
+
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useClock } from "@/hooks/use-clock";
 import { useTabTitle } from "@/hooks/use-tab-title";
@@ -7,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-export function ClockDisplay() {
+export default function ClockDisplay() {
   const time = useClock();
   const { settings, loading, updateSetting } = useClockSettings();
   const clockColor = useThemeColor("clock");
