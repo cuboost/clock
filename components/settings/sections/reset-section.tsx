@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useClockSettings } from "@/context/clock-settings-context";
 import { ConfirmationDialog } from "../ui/confirmation-dialog";
 import SettingsSection from "../ui/settings-section";
+import { toast } from "sonner";
 
 export default function ResetSection() {
   const { resetSettings } = useClockSettings();
@@ -19,7 +20,8 @@ export default function ResetSection() {
           trigger={<Button>Reset to Defaults</Button>}
           onConfirm={() => {
             resetSettings();
-            window.location.reload();
+            toast("Settings reset to defaults");
+            setTimeout(() => window.location.reload(), 1000);
           }}
           confirmText="Reset"
         />

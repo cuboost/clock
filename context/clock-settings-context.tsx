@@ -65,12 +65,12 @@ export function ClockSettingsProvider({
           const decoded = JSON.parse(atob(encoded));
           setSettings(decoded);
           await db.settings.put(decoded);
-
           setLoading(false);
+          setTimeout(() => toast("Shared link settings applied!"), 100);
           return;
         } catch (err) {
           console.error("Failed to decode settings:", err);
-          setTimeout(() => toast.error("Invalid shared settings"), 100);
+          setTimeout(() => toast.error("Invalid shared link settings"), 100);
         } finally {
           // Clear the URL parameter
           window.history.replaceState(
