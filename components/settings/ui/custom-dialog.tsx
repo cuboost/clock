@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -22,24 +23,24 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
 
-interface ConfirmationDialogProps {
+interface CustomDialogProps {
   title: string;
   description?: string;
-  trigger: React.ReactNode;
-  children?: React.ReactNode;
+  trigger?: React.ReactNode;
+  children: React.ReactNode;
   onConfirm?: () => void | Promise<void>;
   confirmText?: string;
-  cancelText?: string;
+  closeText?: string;
 }
 
-export function ConfirmationDialog({
+export function CustomDialog({
   title,
   description,
-  trigger,
+  children,
   onConfirm,
-  confirmText = "Confirm",
-  cancelText = "Cancel",
-}: ConfirmationDialogProps) {
+  confirmText,
+  closeText = "Close",
+}: CustomDialogProps) {
   const [open, setOpen] = useState(false);
   const isDesktop = !useIsMobile();
 
@@ -51,7 +52,7 @@ export function ConfirmationDialog({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{trigger}</DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
@@ -60,10 +61,12 @@ export function ConfirmationDialog({
             )}
           </DialogHeader>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              {cancelText}
-            </Button>
-            <Button onClick={handleConfirm}>{confirmText}</Button>
+            <DialogClose asChild>
+              <Button variant="outline">{closeText}</Button>
+            </DialogClose>
+            {confirmText && (
+              <Button onClick={handleConfirm}>{confirmText}</Button>
+            )}
           </div>
         </DialogContent>
       </Dialog>
@@ -72,7 +75,7 @@ export function ConfirmationDialog({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>{title}</DrawerTitle>
@@ -80,9 +83,11 @@ export function ConfirmationDialog({
         </DrawerHeader>
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">{cancelText}</Button>
+            <Button variant="outline">{closeText}</Button>
           </DrawerClose>
-          <Button onClick={handleConfirm}>{confirmText}</Button>
+          {confirmText && (
+            <Button onClick={handleConfirm}>{confirmText}</Button>
+          )}
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
