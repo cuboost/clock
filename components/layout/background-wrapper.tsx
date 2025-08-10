@@ -1,11 +1,14 @@
 "use client";
 
 import { useClockSettings } from "@/context/clock-settings-context";
+import { useApplyTheme } from "@/hooks/use-apply-theme";
 import { useBackgroundStyle } from "@/hooks/use-background-style";
 
 export function BackgroundWrapper({ children }: { children: React.ReactNode }) {
   const { settings } = useClockSettings();
   const backgroundStyle = useBackgroundStyle();
+
+  useApplyTheme();
 
   if (!backgroundStyle) return null; // wait until mounted
 
