@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import {
   Clock,
   Heart,
+  Hourglass,
   Maximize2,
   Minimize2,
   Settings2,
@@ -91,33 +92,19 @@ function AnimatedFloatingButton({
       }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
-      {asChild && href ? (
-        <Button
-          asChild
-          variant="ghost"
-          className="dark:focus-visible:bg-input/50 focus-visible:bg-accent flex items-center justify-center gap-2 p-2 focus-visible:ring-0"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={() => expandable && setExpanded(false)}
-          onFocus={handleMouseEnter}
-          onBlur={() => expandable && setExpanded(false)}
-          style={{ color: settingsColor }}
-        >
-          <Link href={href}>{buttonContent}</Link>
-        </Button>
-      ) : (
-        <Button
-          variant="ghost"
-          className="dark:focus-visible:bg-input/50 focus-visible:bg-accent flex items-center justify-center gap-2 p-2 focus-visible:ring-0"
-          onClick={onClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={() => expandable && setExpanded(false)}
-          onFocus={handleMouseEnter}
-          onBlur={() => expandable && setExpanded(false)}
-          style={{ color: settingsColor }}
-        >
-          {buttonContent}
-        </Button>
-      )}
+      <Button
+        asChild={asChild}
+        variant="ghost"
+        className="dark:focus-visible:bg-input/50 focus-visible:bg-accent flex items-center justify-center gap-2 p-2 focus-visible:ring-0"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => expandable && setExpanded(false)}
+        onFocus={handleMouseEnter}
+        onBlur={() => expandable && setExpanded(false)}
+        style={{ color: settingsColor }}
+        onClick={onClick}
+      >
+        {href ? <Link href={href}>{buttonContent}</Link> : buttonContent}
+      </Button>
     </motion.div>
   );
 }
@@ -147,7 +134,15 @@ export function FloatingButtons() {
         <AnimatedFloatingButton
           icon={<Timer className="h-6! w-6!" />}
           iconWidth={48}
+          label="Stopwatch"
+          textClassName="text-base"
+          asChild
+          href="/stopwatch"
+        />
+        <AnimatedFloatingButton
+          icon={<Hourglass className="mt-0.5 h-5! w-5!" strokeWidth={2.25} />}
           label="Timer"
+          iconWidth={48}
           textClassName="text-base"
           asChild
           href="/timer"
