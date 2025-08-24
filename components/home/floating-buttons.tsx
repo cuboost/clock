@@ -157,7 +157,21 @@ export function FloatingButtons() {
       >
         <CustomDialog
           title="Thank you &hearts;"
-          description="Thank you for using Cuboost Clock!"
+          description={
+            <>
+              Thanks for choosing Cuboost Clock! I believe in privacy, so
+              you&apos;ll never find any trackers or ads here. It&apos;s also
+              open source, so you can see for yourself on{" "}
+              <a
+                href="https://github.com/cuboost/clock"
+                className="font-medium"
+              >
+                Github
+              </a>
+              . If you enjoy the clean experience, please consider sharing it
+              with friends and family.
+            </>
+          }
         >
           <AnimatedFloatingButton
             icon={<Heart />}

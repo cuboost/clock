@@ -39,6 +39,10 @@ export function TimerDisplay() {
         preciseSecondsLeft={preciseSecondsLeft}
         totalSeconds={duration}
         milliseconds={milliseconds}
+        pauseTimer={pause}
+        setTimer={setDuration}
+        duration={duration}
+        running={running}
       />
       <TimerControls
         running={running}
@@ -46,6 +50,8 @@ export function TimerDisplay() {
         pause={pause}
         reset={reset}
         setDuration={setDuration}
+        duration={duration}
+        secondsLeft={secondsLeft}
       />
     </div>
   );

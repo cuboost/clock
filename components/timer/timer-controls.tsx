@@ -9,6 +9,8 @@ interface TimerControlsProps {
   pause: () => void;
   reset: () => void;
   setDuration: (seconds: number) => void;
+  duration: number;
+  secondsLeft: number;
 }
 
 const PRESETS = [
@@ -23,19 +25,20 @@ export function TimerControls({
   pause,
   reset,
   setDuration,
+  duration,
+  secondsLeft,
 }: TimerControlsProps) {
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="flex gap-2">
-        {running ? (
-          <Button onClick={pause} variant="default">
+        <Button onClick={running ? pause : start} variant="default">
+          {running ? (
             <Pause className="h-4 w-4" />
-          </Button>
-        ) : (
-          <Button onClick={start} variant="default">
+          ) : (
             <Play className="h-4 w-4" />
-          </Button>
-        )}
+          )}
+          {running ? "Pause" : duration == secondsLeft ? "Start" : "Resume"}
+        </Button>
         <Button onClick={reset} variant="secondary">
           <RotateCcw className="h-4 w-4" />
         </Button>

@@ -25,7 +25,7 @@ import { useState } from "react";
 
 interface CustomDialogProps {
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   trigger?: React.ReactNode;
   children: React.ReactNode;
   onConfirm?: () => void | Promise<void>;

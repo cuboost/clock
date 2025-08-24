@@ -10,8 +10,7 @@ export function BackgroundWrapper({ children }: { children: React.ReactNode }) {
 
   useApplyTheme();
 
-  if (!backgroundStyle) return null; // wait until mounted
-
+  if (!backgroundStyle) return null;
   return (
     <div style={backgroundStyle} className="h-dvh w-full overflow-hidden">
       <main
