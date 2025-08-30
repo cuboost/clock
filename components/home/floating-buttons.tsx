@@ -29,8 +29,8 @@ function AnimatedFloatingButton({
   onMouseEnter,
   expandable = true,
   textClassName = "",
-  asChild = false, // <-- Add this prop
-  href, // <-- Add this prop
+  asChild = false,
+  href,
 }: {
   icon: React.ReactNode;
   iconWidth?: number;
@@ -39,17 +39,17 @@ function AnimatedFloatingButton({
   onMouseEnter?: () => void;
   expandable?: boolean;
   textClassName?: string;
-  asChild?: boolean; // <-- Add this prop
-  href?: string; // <-- Add this prop
+  asChild?: boolean;
+  href?: string;
 }) {
   const settingsColor = useThemeColor("clock");
-  const [width, setWidth] = useState(iconWidth);
+  const [width, setWidth] = useState<number>();
 
-  const textRef = useRef<HTMLSpanElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useLayoutEffect(() => {
-    if (expandable && textRef.current && label) {
-      setWidth(iconWidth + textRef.current.offsetWidth + 12);
+    if (expandable && buttonRef.current && label) {
+      setWidth(buttonRef.current.getBoundingClientRect().width);
     } else {
       setWidth(iconWidth);
     }
@@ -69,7 +69,6 @@ function AnimatedFloatingButton({
       {icon}
       {expandable && label && (
         <motion.span
-          ref={textRef}
           className={cn("whitespace-nowrap", textClassName)}
           variants={{
             collapsed: { opacity: 0 },
@@ -94,6 +93,7 @@ function AnimatedFloatingButton({
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
       <Button
+        ref={buttonRef}
         asChild={asChild}
         variant="ghost"
         className="dark:focus-visible:bg-input/50 focus-visible:bg-accent flex items-center justify-center gap-2 p-2 focus-visible:ring-0"
@@ -165,7 +165,7 @@ export function FloatingButtons() {
               open source, so you can see for yourself on{" "}
               <a
                 href="https://github.com/cuboost/clock"
-                className="font-medium"
+                className="font-medium focus-visible:underline focus-visible:underline-offset-4"
               >
                 Github
               </a>
@@ -177,7 +177,7 @@ export function FloatingButtons() {
                   href="https://www.buymeacoffee.com/cuboost"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative inline-block h-10 w-40"
+                  className="focus-visible:border-ring focus-visible:ring-ring/50 relative inline-block h-[34px] w-40 rounded-md focus-visible:ring-[3px]"
                 >
                   <Image
                     src={`https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=cuboost&button_colour=737373&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=ffffff`}
@@ -191,7 +191,7 @@ export function FloatingButtons() {
                   href="https://github.com/cuboost/clock"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-muted-foreground flex h-[34px] w-[34px] items-center justify-center rounded-md"
+                  className="bg-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-[34px] w-[34px] items-center justify-center rounded-md focus-visible:ring-[3px]"
                 >
                   <Image
                     height="20"

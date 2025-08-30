@@ -242,6 +242,10 @@ input[type="number"]::-webkit-outer-spin-button {
   p {
     @apply leading-relaxed;
   }
+
+  a {
+    @apply focus-visible:outline-none!;
+  }
 }
 
 [data-theme="red"]:root {
