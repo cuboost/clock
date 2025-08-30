@@ -132,14 +132,14 @@ export function FloatingButtons() {
           asChild
           href="/"
         />
-        <AnimatedFloatingButton
+        {/* <AnimatedFloatingButton
           icon={<Timer className="h-6! w-6!" />}
           iconWidth={48}
           label="Stopwatch"
           textClassName="text-base"
           asChild
           href="/stopwatch"
-        />
+        /> */}
         <AnimatedFloatingButton
           icon={<Hourglass className="mt-0.5 h-5! w-5!" strokeWidth={2.25} />}
           label="Timer"
