@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import {
   cn,
+  formatDuration,
   formatEndTime,
   formatTime,
   parseFlexibleTimeInput,
@@ -19,7 +20,6 @@ interface CircularTimerProps {
   duration: number;
   pauseTimer: () => void;
   startTimer: () => void;
-  resetTimer: () => void;
   setTimer: (seconds: number) => void;
   running: boolean;
 }
@@ -30,14 +30,13 @@ export function CircularTimer({
   preciseSecondsLeft,
   milliseconds,
   pauseTimer,
-  resetTimer,
   duration,
   setTimer,
   running,
 }: CircularTimerProps) {
   const [largeMode, setLargeMode] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [isEditing, setIsEditing] = useState(true);
+  const [inputValue, setInputValue] = useState("00:05:00");
 
   const radius = useMemo(() => (largeMode ? 200 : 130), [largeMode]);
   const strokeWidth = useMemo(() => (largeMode ? 15 : 11), [largeMode]);
@@ -51,10 +50,39 @@ export function CircularTimer({
 
   const endTime = useMemo(() => formatEndTime(secondsLeft), [secondsLeft]);
 
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    let raw = e.target.value.replace(/\D/g, ""); // Keep only numbers
+
+    // Limit to 6 digits
+    if (raw.length > 6) raw = raw.slice(-6);
+
+    // Right-align digits
+    raw = raw.padStart(6, "0");
+
+    // Format as HH:MM:SS
+    const formatted = `${raw.slice(0, 2)}:${raw.slice(2, 4)}:${raw.slice(4, 6)}`;
+
+    setInputValue(formatted);
+
+    // Ensure the cursor is at the end
+    // Use setTimeout(0) or requestAnimationFrame to run after render
+    setTimeout(() => {
+      const input = e.target;
+      input.setSelectionRange(formatted.length, formatted.length);
+    }, 0);
+  }, []);
+
   const handleFocus = useCallback(() => {
     pauseTimer();
     setIsEditing(true);
-    setInputValue(formatTime(Math.ceil(secondsLeft)));
+
+    // Always prefill as HH:MM:SS
+    const raw = Math.max(0, secondsLeft);
+    const hours = String(Math.floor(raw / 3600)).padStart(2, "0");
+    const minutes = String(Math.floor((raw % 3600) / 60)).padStart(2, "0");
+    const seconds = String(raw % 60).padStart(2, "0");
+
+    setInputValue(`${hours}:${minutes}:${seconds}`);
   }, [secondsLeft, pauseTimer]);
 
   const handleBlur = useCallback(() => {
@@ -63,16 +91,18 @@ export function CircularTimer({
       const total = parseFlexibleTimeInput(inputValue);
       if (total !== null) {
         setTimer(total);
-        resetTimer();
       }
     }
-  }, [inputValue, resetTimer, setTimer]);
+  }, [inputValue, setTimer]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === "Escape") {
-      e.currentTarget.blur();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter" || e.key === "Escape") {
+        e.currentTarget.blur();
+      }
+    },
+    [],
+  );
 
   return (
     <motion.div
@@ -113,28 +143,27 @@ export function CircularTimer({
           style={{ transition: "stroke-dashoffset 0.2s linear" }}
         />
       </motion.svg>
-
       <div
         className={cn(
           "absolute top-1/2 flex h-full -translate-y-1/2 flex-col justify-evenly py-5 tabular-nums select-none",
           running ? "text-primary" : "text-muted-foreground",
         )}
       >
-        {formatTime(duration)}
+        {formatDuration(duration)}
         {isEditing ? (
           <Input
             type="text"
             placeholder="00:00:00"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={onChange}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
-            className="border-none! bg-transparent! p-0 text-center text-4xl! font-bold shadow-none! focus-visible:border-none! focus-visible:ring-0!"
+            className="border-none! bg-transparent! p-0 text-center text-4xl! font-bold tabular-nums shadow-none! focus-visible:border-none! focus-visible:ring-0!"
             autoFocus
           />
         ) : (
           <span
-            className="cursor-pointer text-4xl font-bold"
+            className="cursor-pointer text-4xl leading-9! font-bold"
             tabIndex={0}
             onClick={handleFocus}
             onFocus={handleFocus}

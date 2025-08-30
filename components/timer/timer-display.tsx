@@ -37,7 +37,6 @@ export function TimerDisplay() {
         milliseconds={milliseconds}
         pauseTimer={pause}
         startTimer={start}
-        resetTimer={reset}
         setTimer={setDuration}
         duration={duration}
         running={running}
