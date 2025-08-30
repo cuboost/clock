@@ -13,7 +13,7 @@ import {
   Maximize2,
   Minimize2,
   Settings2,
-  Timer,
+  // Timer,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { useLayoutEffect, useRef, useState } from "react";
