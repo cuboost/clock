@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback } from "react";
-import { useKeyboardShortcut } from "@/hooks/use-keyboard-shortcuts";
+
 import { useTimer } from "@/hooks/use-timer";
-import { TimerControls } from "./timer-controls";
+import { useKeyboardShortcut } from "@/hooks/use-keyboard-shortcuts";
 import { CircularTimer } from "./circular-timer";
+import { TimerControls } from "./timer-controls";
 
 export function TimerDisplay() {
   const {
@@ -19,18 +20,13 @@ export function TimerDisplay() {
     milliseconds,
   } = useTimer(300);
 
-  const handleSpace = useCallback(() => {
+  const toggleStartPause = useCallback(() => {
     if (running) pause();
     else start();
   }, [running, pause, start]);
 
-  const handleReset = useCallback(() => {
-    reset();
-  }, [reset]);
-
-  //   Keyboard shortcuts
-  useKeyboardShortcut(" ", handleSpace);
-  useKeyboardShortcut("r", handleReset);
+  useKeyboardShortcut(" ", toggleStartPause);
+  useKeyboardShortcut("r", reset);
 
   return (
     <div className="flex flex-col items-center gap-6">
@@ -40,6 +36,8 @@ export function TimerDisplay() {
         totalSeconds={duration}
         milliseconds={milliseconds}
         pauseTimer={pause}
+        startTimer={start}
+        resetTimer={reset}
         setTimer={setDuration}
         duration={duration}
         running={running}

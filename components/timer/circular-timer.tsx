@@ -1,17 +1,25 @@
 "use client";
 
-import { cn, formatTime } from "@/lib/utils";
-import { useState } from "react";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
+import {
+  cn,
+  formatEndTime,
+  formatTime,
+  parseFlexibleTimeInput,
+} from "@/lib/utils";
 import { Bell } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { motion } from "motion/react";
 
-interface TimerDisplayProps {
+interface CircularTimerProps {
   secondsLeft: number;
   totalSeconds: number;
   preciseSecondsLeft: number;
   milliseconds: number;
   duration: number;
   pauseTimer: () => void;
+  startTimer: () => void;
+  resetTimer: () => void;
   setTimer: (seconds: number) => void;
   running: boolean;
 }
@@ -21,59 +29,64 @@ export function CircularTimer({
   totalSeconds,
   preciseSecondsLeft,
   milliseconds,
-  duration,
   pauseTimer,
+  resetTimer,
+  duration,
   setTimer,
   running,
-}: TimerDisplayProps) {
+}: CircularTimerProps) {
   const [largeMode, setLargeMode] = useState(false);
-  const radius = largeMode ? 200 : 130; // bigger in large mode
-  const strokeWidth = largeMode ? 15 : 11;
-  const svgSize = radius * 2 + 40; // padding around circle
-  const circumference = 2 * Math.PI * radius;
-
-  const endTime = formatEndTime(new Date(Date.now() + secondsLeft * 1000));
-
-  function formatEndTime(date: Date) {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  }
-
-  const progressRatio = Math.max(
-    0,
-    Math.min(1, preciseSecondsLeft / totalSeconds),
-  );
-  const progress = progressRatio * circumference;
-
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const handleFocus = () => {
+  const radius = useMemo(() => (largeMode ? 200 : 130), [largeMode]);
+  const strokeWidth = useMemo(() => (largeMode ? 15 : 11), [largeMode]);
+  const svgSize = useMemo(() => radius * 2 + 40, [radius]);
+  const circumference = useMemo(() => 2 * Math.PI * radius, [radius]);
+
+  const progress = useMemo(() => {
+    const ratio = Math.max(0, Math.min(1, preciseSecondsLeft / totalSeconds));
+    return ratio * circumference;
+  }, [preciseSecondsLeft, totalSeconds, circumference]);
+
+  const endTime = useMemo(() => formatEndTime(secondsLeft), [secondsLeft]);
+
+  const handleFocus = useCallback(() => {
     pauseTimer();
     setIsEditing(true);
-    setInputValue(formatTime(Math.ceil(secondsLeft))); // prefill with current
-  };
+    setInputValue(formatTime(Math.ceil(secondsLeft)));
+  }, [secondsLeft, pauseTimer]);
 
-  const handleBlur = () => {
-    // Small delay lets other click events finish without losing state prematurely
-    setTimeout(() => {
-      setIsEditing(false);
-      if (inputValue.trim()) {
-        const [h, m, s] = inputValue.split(":").map(Number);
-        const total = (h || 0) * 3600 + (m || 0) * 60 + (s || 0);
+  const handleBlur = useCallback(() => {
+    setIsEditing(false);
+    if (inputValue.trim()) {
+      const total = parseFlexibleTimeInput(inputValue);
+      if (total !== null) {
         setTimer(total);
+        resetTimer();
       }
-    }, 0);
-  };
+    }
+  }, [inputValue, resetTimer, setTimer]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === "Escape") {
-      e.currentTarget.blur(); // triggers onBlur
+      e.currentTarget.blur();
     }
   };
 
   return (
-    <div className="relative flex flex-col items-center">
-      <svg
+    <motion.div
+      transition={{
+        type: "spring",
+      }}
+      className="relative flex flex-col items-center select-none"
+      onClick={() => {
+        if (!isEditing) {
+          setLargeMode(!largeMode);
+        }
+      }}
+    >
+      <motion.svg
         width={svgSize}
         height={svgSize}
         className="-rotate-90 transform"
@@ -96,13 +109,12 @@ export function CircularTimer({
           r={radius}
           cx={svgSize / 2}
           cy={svgSize / 2}
-          className="transition-colors duration-200 ease-in-out"
-          style={{ transition: "stroke-dashoffset 0.2s linear" }}
           strokeLinecap="round"
+          style={{ transition: "stroke-dashoffset 0.2s linear" }}
         />
-      </svg>
+      </motion.svg>
 
-      <span
+      <div
         className={cn(
           "absolute top-1/2 flex h-full -translate-y-1/2 flex-col justify-evenly py-5 tabular-nums select-none",
           running ? "text-primary" : "text-muted-foreground",
@@ -115,7 +127,6 @@ export function CircularTimer({
             placeholder="00:00:00"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onFocus={handleFocus}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             className="border-none! bg-transparent! p-0 text-center text-4xl! font-bold shadow-none! focus-visible:border-none! focus-visible:ring-0!"
@@ -128,14 +139,19 @@ export function CircularTimer({
             onClick={handleFocus}
             onFocus={handleFocus}
           >
-            {formatTime(Math.ceil(secondsLeft))}
+            {formatTime(
+              Math.floor(preciseSecondsLeft),
+              milliseconds,
+              false,
+              false,
+            )}
           </span>
         )}
         <div className="flex items-center justify-center gap-1">
           <Bell className="h-4 w-4" />
           {endTime}
         </div>
-      </span>
-    </div>
+      </div>
+    </motion.div>
   );
 }

@@ -31,15 +31,19 @@ export function TimerControls({
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="flex gap-2">
-        <Button onClick={running ? pause : start} variant="default">
+        <Button
+          onClick={running ? pause : start}
+          variant="default"
+          aria-label={running ? "Pause timer" : "Start timer"}
+        >
           {running ? (
             <Pause className="h-4 w-4" />
           ) : (
             <Play className="h-4 w-4" />
           )}
-          {running ? "Pause" : duration == secondsLeft ? "Start" : "Resume"}
+          {running ? "Pause" : duration === secondsLeft ? "Start" : "Resume"}
         </Button>
-        <Button onClick={reset} variant="secondary">
+        <Button onClick={reset} variant="secondary" aria-label="Reset timer">
           <RotateCcw className="h-4 w-4" />
         </Button>
       </div>

@@ -37,37 +37,27 @@ export function CustomDialog({
   title,
   description,
   children,
-  onConfirm,
-  confirmText,
-  closeText = "Close",
+  closeText,
 }: CustomDialogProps) {
   const [open, setOpen] = useState(false);
   const isDesktop = !useIsMobile();
-
-  const handleConfirm = async () => {
-    if (onConfirm) await onConfirm();
-    setOpen(false);
-  };
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader className="gap-3">
             <DialogTitle>{title}</DialogTitle>
             {description && (
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>
-          <div className="flex justify-end gap-2">
+          {closeText && (
             <DialogClose asChild>
               <Button variant="outline">{closeText}</Button>
             </DialogClose>
-            {confirmText && (
-              <Button onClick={handleConfirm}>{confirmText}</Button>
-            )}
-          </div>
+          )}
         </DialogContent>
       </Dialog>
     );
@@ -82,11 +72,10 @@ export function CustomDialog({
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
         <DrawerFooter>
-          <DrawerClose asChild>
-            <Button variant="outline">{closeText}</Button>
-          </DrawerClose>
-          {confirmText && (
-            <Button onClick={handleConfirm}>{confirmText}</Button>
+          {closeText && (
+            <DrawerClose asChild>
+              <Button variant="outline">{closeText}</Button>
+            </DrawerClose>
           )}
         </DrawerFooter>
       </DrawerContent>

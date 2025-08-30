@@ -19,6 +19,7 @@ import { motion } from "motion/react";
 import { useLayoutEffect, useRef, useState } from "react";
 import { CustomDialog } from "../settings/ui/custom-dialog";
 import Link from "next/link";
+import Image from "next/image";
 
 function AnimatedFloatingButton({
   icon,
@@ -168,8 +169,40 @@ export function FloatingButtons() {
               >
                 Github
               </a>
-              . If you enjoy the clean experience, please consider sharing it
-              with friends and family.
+              . If you enjoy the clean experience, please consider supporting me
+              with &quot;Buy me a coffee&quot; or sharing it with friends and
+              family.
+              <span className="mt-3 flex items-center justify-center gap-2 md:justify-start">
+                <a
+                  href="https://www.buymeacoffee.com/cuboost"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative inline-block h-10 w-40"
+                >
+                  <Image
+                    src={`https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=cuboost&button_colour=737373&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=ffffff`}
+                    alt="Buy me a coffee"
+                    fill
+                    unoptimized
+                    priority
+                  />
+                </a>
+                <a
+                  href="https://github.com/cuboost/clock"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-muted-foreground flex h-[34px] w-[34px] items-center justify-center rounded-md"
+                >
+                  <Image
+                    height="20"
+                    width="20"
+                    src="https://cdn.simpleicons.org/github/ffffff"
+                    alt="GitHub Logo"
+                    unoptimized
+                    priority
+                  />
+                </a>
+              </span>
             </>
           }
         >

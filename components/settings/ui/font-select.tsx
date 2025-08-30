@@ -70,7 +70,7 @@ export function FontSelect({ label, id, setting }: FontSelectProps) {
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="w-full p-0">
+        <PopoverContent className="xxs:w-[76vw]! xs:w-[84vw]! w-[70vw]! p-0 sm:w-[285px]!">
           <Command>
             <CommandInput placeholder="Search font..." className="h-9" />
             <CommandList>

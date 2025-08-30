@@ -1,14 +1,13 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export function useTimer(initialSeconds: number = 60, onComplete?: () => void) {
+export function useTimer(initialSeconds = 60, onComplete?: () => void) {
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
+  const [preciseSecondsLeft, setPreciseSecondsLeft] = useState(initialSeconds);
   const [running, setRunning] = useState(false);
+
   const totalSecondsRef = useRef(initialSeconds);
   const endTimeRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
-
-  // NEW: Track float seconds for smooth progress
-  const [preciseSecondsLeft, setPreciseSecondsLeft] = useState(initialSeconds);
 
   const stopRAF = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -21,16 +20,18 @@ export function useTimer(initialSeconds: number = 60, onComplete?: () => void) {
     const now = performance.now();
     const msLeft = Math.max(0, endTimeRef.current - now);
     const sLeft = msLeft / 1000;
+
     setPreciseSecondsLeft(sLeft);
     setSecondsLeft(Math.ceil(sLeft));
+
     if (msLeft <= 0) {
       stopRAF();
       setRunning(false);
       onComplete?.();
-      return;
+    } else {
+      rafRef.current = requestAnimationFrame(tick);
     }
-    rafRef.current = requestAnimationFrame(tick);
-  }, [onComplete, stopRAF]);
+  }, [stopRAF, onComplete]);
 
   const start = useCallback(() => {
     if (running || secondsLeft <= 0) return;
@@ -64,22 +65,23 @@ export function useTimer(initialSeconds: number = 60, onComplete?: () => void) {
       setPreciseSecondsLeft(seconds);
       setSecondsLeft(seconds);
       setRunning(false);
-      endTimeRef.current = null;
     },
     [stopRAF],
   );
 
-  const duration = totalSecondsRef.current;
+  useEffect(() => {
+    return () => stopRAF();
+  }, [stopRAF]);
 
   return {
     secondsLeft,
+    preciseSecondsLeft,
+    milliseconds: Math.floor((preciseSecondsLeft % 1) * 1000),
+    duration: totalSecondsRef.current,
     running,
     start,
     pause,
     reset,
     setDuration,
-    duration,
-    preciseSecondsLeft, // float, for smooth progress
-    milliseconds: Math.floor((preciseSecondsLeft % 1) * 1000),
   };
 }

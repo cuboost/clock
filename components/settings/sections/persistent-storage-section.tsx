@@ -26,6 +26,9 @@ export function PersistentStorageSection() {
   const enablePersistence = async () => {
     if (navigator.storage && navigator.storage.persist) {
       const granted = await navigator.storage.persist();
+      console.log("Persistence granted:", granted);
+      const estimate = await navigator.storage.estimate();
+      console.log("Storage estimate:", estimate);
       setPersisted(granted);
     } else {
       setPersisted("not supported");
@@ -46,7 +49,9 @@ export function PersistentStorageSection() {
       title="Persist Settings"
       description="Ask your browser to save your settings permanently."
     >
-      <Button onClick={enablePersistence}>Enable Persistent Storage</Button>
+      <Button variant="outline" onClick={enablePersistence}>
+        Enable Persistent Storage
+      </Button>
     </SettingsSection>
   );
 }
