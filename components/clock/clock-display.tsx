@@ -1,3 +1,5 @@
+"use client";
+
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useClock } from "@/hooks/use-clock";
 import { useTabTitle } from "@/hooks/use-tab-title";

@@ -8,11 +8,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useClockSettings } from "@/context/clock-settings-context";
-import AppearanceSettings from "./pages/appearance-settings";
-import GeneralSettings from "./pages/general-settings";
-import MoreSettings from "./pages/more-settings";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { AppearanceSettings } from "./pages/appearance-settings";
+import { GeneralSettings } from "./pages/general-settings";
+import { MoreSettings } from "./pages/more-settings";
 
 type SettingsSheetProps = {
   children?: React.ReactNode;
@@ -55,7 +55,7 @@ export function SettingsSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>{children}</SheetTrigger>
 
-      <SheetContent className="overflow-scroll will-change-transform">
+      <SheetContent className="overflow-scroll will-change-transform sm:rounded-l-xl">
         <SheetHeader className="p-6 pb-0">
           <SheetTitle className="text-2xl">Settings</SheetTitle>
         </SheetHeader>

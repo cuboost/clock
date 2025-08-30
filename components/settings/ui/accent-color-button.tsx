@@ -8,7 +8,7 @@ type AccentColorButtonProps = {
   themeName: ThemeType;
 };
 
-export default function AccentColorButton({
+export function AccentColorButton({
   label,
   themeName,
 }: AccentColorButtonProps) {

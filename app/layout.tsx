@@ -4,8 +4,9 @@ import "./globals.css";
 import { ClockSettingsProvider } from "@/context/clock-settings-context";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "sonner";
-import ContextMenuHome from "@/components/home/context-menu-home";
 import { FullscreenProvider } from "@/context/fullscreen-context";
+import { ContextMenuHome } from "@/components/home/context-menu-home";
+import ProgressBarProvider from "@/components/progress-bar/progress-bar-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +41,9 @@ export default function RootLayout({
         >
           <ClockSettingsProvider>
             <FullscreenProvider>
-              <ContextMenuHome>{children}</ContextMenuHome>
+              <ProgressBarProvider>
+                <ContextMenuHome>{children}</ContextMenuHome>
+              </ProgressBarProvider>
             </FullscreenProvider>
           </ClockSettingsProvider>
           <Toaster richColors position="top-center" />

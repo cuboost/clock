@@ -1,11 +1,11 @@
-import { ClockDisplay } from "@/components/clock/clock-display";
 import { FloatingButtons } from "@/components/home/floating-buttons";
 import { BackgroundWrapper } from "@/components/layout/background-wrapper";
+import { TimerDisplay } from "@/components/timer/timer-display";
 
-export default function Clock() {
+export default function Timer() {
   return (
     <BackgroundWrapper>
-      <ClockDisplay />
+      <TimerDisplay />
       <FloatingButtons />
     </BackgroundWrapper>
   );

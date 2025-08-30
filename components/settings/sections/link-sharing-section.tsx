@@ -2,11 +2,11 @@ import { useClockSettings } from "@/context/clock-settings-context";
 import { Copy } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import SettingsSection from "../ui/settings-section";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { SettingsSection } from "../ui/settings-section";
 
-export default function LinkSharingSection() {
+export function LinkSharingSection() {
   const { generateShareLink } = useClockSettings();
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);

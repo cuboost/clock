@@ -2,9 +2,11 @@ import {
   DEFAULT_SETTINGS,
   useClockSettings,
 } from "@/context/clock-settings-context";
+import { positionClasses } from "@/lib/clock-positions";
 import { ClockPositionType } from "@/lib/db";
-import { Clock, Calendar } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
 import {
   Select,
   SelectContent,
@@ -12,13 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
-import ColorInput from "../ui/color-input";
-import SettingsSection from "../ui/settings-section";
-import SliderInput from "../ui/slider-input";
-import { Label } from "../../ui/label";
-import { positionClasses } from "@/lib/clock-positions";
+import { ColorInput } from "../ui/color-input";
+import { SettingsSection } from "../ui/settings-section";
+import { SliderInput } from "../ui/slider-input";
 
-export default function ClockAppearanceSection() {
+export function ClockAppearanceSection() {
   const { settings, updateSetting } = useClockSettings();
   const clockPositions = Object.keys(positionClasses) as ClockPositionType[];
   const axes = ["x", "y"] as const;

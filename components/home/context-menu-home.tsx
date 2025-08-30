@@ -13,11 +13,7 @@ import {
 
 import { useState } from "react";
 
-export default function ContextMenuHome({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function ContextMenuHome({ children }: { children: React.ReactNode }) {
   const { isFullscreen, toggleFullscreen } = useFullscreen();
   const [settingsOpen, setSettingsOpen] = useState(false);
 

@@ -1,8 +1,8 @@
 import { Textarea } from "@/components/ui/textarea";
 import { useClockSettings } from "@/context/clock-settings-context";
-import SettingsSection from "../ui/settings-section";
+import { SettingsSection } from "../ui/settings-section";
 
-export default function CustomCSSSection() {
+export function CustomCSSSection() {
   const { settings, updateSetting } = useClockSettings();
 
   return (

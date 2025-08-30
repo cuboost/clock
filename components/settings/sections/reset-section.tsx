@@ -1,11 +1,22 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useClockSettings } from "@/context/clock-settings-context";
-import { ConfirmationDialog } from "../ui/confirmation-dialog";
-import SettingsSection from "../ui/settings-section";
+import { toast } from "sonner";
+import { SettingsSection } from "../ui/settings-section";
 
-export default function ResetSection() {
+export function ResetSection() {
   const { resetSettings } = useClockSettings();
   return (
     <>
@@ -13,16 +24,33 @@ export default function ResetSection() {
         title="Reset"
         description="Remove all your custom settings stored locally on this device."
       >
-        <ConfirmationDialog
-          title="Reset Settings?"
-          description="This action is irreversible and will remove all your custom settings stored locally on this device."
-          trigger={<Button>Reset to Defaults</Button>}
-          onConfirm={() => {
-            resetSettings();
-            window.location.reload();
-          }}
-          confirmText="Reset"
-        />
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button>Reset to Defaults</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="sm:max-w-md!">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Reset Settings?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will remove all your custom
+                settings stored locally on this device.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                className=""
+                onClick={() => {
+                  resetSettings();
+                  toast("Settings reset to defaults");
+                  setTimeout(() => window.location.reload(), 1000);
+                }}
+              >
+                Reset
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </SettingsSection>
     </>
   );
