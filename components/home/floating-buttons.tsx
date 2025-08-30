@@ -191,7 +191,7 @@ export function FloatingButtons() {
                   href="https://github.com/cuboost/clock"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-[34px] w-[34px] items-center justify-center rounded-md focus-visible:ring-[3px]"
+                  className="focus-visible:border-ring focus-visible:ring-ring/50 flex h-[34px] w-[34px] items-center justify-center rounded-md bg-[#737373] focus-visible:ring-[3px]"
                 >
                   <Image
                     height="20"
