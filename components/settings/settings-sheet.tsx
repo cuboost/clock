@@ -20,7 +20,6 @@ type SettingsSheetProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
-// Define an array of tab objects without a separate 'label' property
 const settingsTabs = [
   {
     value: "general",
@@ -46,7 +45,6 @@ export function SettingsSheet({
 
   if (loading) return null;
 
-  // Helper function to capitalize the first letter
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
@@ -55,34 +53,43 @@ export function SettingsSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>{children}</SheetTrigger>
 
-      <SheetContent className="overflow-scroll will-change-transform sm:rounded-l-xl">
+      <SheetContent className="flex flex-col sm:rounded-l-xl">
         <SheetHeader className="p-6 pb-0">
           <SheetTitle className="text-2xl">Settings</SheetTitle>
         </SheetHeader>
 
-        <div className="p-6 pt-0">
+        <div className="flex flex-1 flex-col overflow-hidden pt-0">
           <Tabs
             value={settingTab}
             onValueChange={setSettingTab}
-            className="gap-5"
+            className="flex flex-1 flex-col overflow-hidden"
           >
-            <TabsList className="w-full">
-              {settingsTabs.map((tab) => (
-                <TabsTrigger key={tab.value} value={tab.value}>
-                  {capitalizeFirstLetter(tab.value)}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+            {/* Tabs list stays fixed */}
+            <div className="mx-6">
+              <TabsList className="w-full flex-shrink-0">
+                {settingsTabs.map((tab) => (
+                  <TabsTrigger key={tab.value} value={tab.value}>
+                    {capitalizeFirstLetter(tab.value)}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
 
-            {settingsTabs.map((tab) => (
-              <TabsContent
-                key={tab.value}
-                value={tab.value}
-                className="grid flex-1 auto-rows-min gap-4"
-              >
-                {tab.component}
-              </TabsContent>
-            ))}
+            {/* Scrollable content */}
+            <div
+              className="flex-1 overflow-y-auto px-6 pt-3 pb-6"
+              style={{ scrollbarGutter: "stable" }}
+            >
+              {settingsTabs.map((tab) => (
+                <TabsContent
+                  key={tab.value}
+                  value={tab.value}
+                  className="grid auto-rows-min gap-4"
+                >
+                  {tab.component}
+                </TabsContent>
+              ))}
+            </div>
           </Tabs>
         </div>
       </SheetContent>
