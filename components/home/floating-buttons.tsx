@@ -83,7 +83,7 @@ function AnimatedFloatingButton({
 
   return (
     <motion.div
-      className="flex cursor-pointer items-center overflow-hidden"
+      className="flex cursor-pointer items-center overflow-hidden select-none"
       initial="collapsed"
       animate={expandable && expanded ? "expanded" : "collapsed"}
       variants={{
@@ -120,7 +120,7 @@ export function FloatingButtons() {
     <>
       <div
         className={cn(
-          "absolute top-8 flex items-center rounded-xl border p-2 transition duration-500",
+          "absolute top-8 flex items-center rounded-xl border p-2 backdrop-blur-xl transition duration-500",
           isInactive ? "pointer-events-none opacity-0" : "opacity-100",
         )}
       >
