@@ -14,7 +14,7 @@ export function BackgroundWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div style={backgroundStyle} className="h-dvh w-full overflow-hidden">
       <main
-        className="flex h-full w-full flex-col items-center justify-center gap-3 px-2 py-10 text-center md:p-10"
+        className="flex h-full w-full flex-col items-center justify-center gap-3 text-center"
         style={{
           backdropFilter: `blur(${settings.backgroundImageBlur}px) brightness(${settings.backgroundImageBrightness}) contrast(${settings.backgroundImageContrast}) grayscale(${settings.backgroundImageGrayscale})`,
         }}

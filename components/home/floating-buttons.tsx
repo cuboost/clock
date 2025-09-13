@@ -27,6 +27,7 @@ function AnimatedFloatingButton({
   label,
   onClick,
   onMouseEnter,
+  setPaused,
   expandable = true,
   textClassName = "",
   asChild = false,
@@ -37,6 +38,7 @@ function AnimatedFloatingButton({
   label?: string;
   onClick?: () => void;
   onMouseEnter?: () => void;
+  setPaused: (paused: boolean) => void;
   expandable?: boolean;
   textClassName?: string;
   asChild?: boolean;
@@ -58,10 +60,18 @@ function AnimatedFloatingButton({
   const [expanded, setExpanded] = useState(false);
 
   const handleMouseEnter = () => {
+    setPaused(true);
     if (expandable && label) {
       setExpanded(true);
     }
     if (onMouseEnter) onMouseEnter();
+  };
+
+  const handleMouseLeave = () => {
+    setPaused(false);
+    if (expandable && label) {
+      setExpanded(false);
+    }
   };
 
   const buttonContent = (
@@ -98,9 +108,9 @@ function AnimatedFloatingButton({
         variant="ghost"
         className="dark:focus-visible:bg-input/50 focus-visible:bg-accent flex items-center justify-center gap-2 p-2 focus-visible:ring-0"
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={() => expandable && setExpanded(false)}
+        onMouseLeave={handleMouseLeave}
         onFocus={handleMouseEnter}
-        onBlur={() => expandable && setExpanded(false)}
+        onBlur={handleMouseLeave}
         style={{ color: settingsColor }}
         onClick={onClick}
       >
@@ -112,7 +122,7 @@ function AnimatedFloatingButton({
 
 export function FloatingButtons() {
   const { isFullscreen, toggleFullscreen } = useFullscreen();
-  const isInactive = useInactivity(5000);
+  const { isInactive, setPaused } = useInactivity({ timeout: 5000 });
 
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -120,7 +130,7 @@ export function FloatingButtons() {
     <>
       <div
         className={cn(
-          "absolute top-8 flex items-center rounded-xl border p-2 backdrop-blur-xl transition duration-500",
+          "absolute top-8 flex items-center rounded-xl border p-2 backdrop-blur-xl transition duration-500 ease-in-out",
           isInactive ? "pointer-events-none opacity-0" : "opacity-100",
         )}
       >
@@ -131,6 +141,7 @@ export function FloatingButtons() {
           textClassName="text-base"
           asChild
           href="/"
+          setPaused={setPaused}
         />
         {/* <AnimatedFloatingButton
           icon={<Timer className="h-6! w-6!" />}
@@ -147,12 +158,13 @@ export function FloatingButtons() {
           textClassName="text-base"
           asChild
           href="/timer"
+          setPaused={setPaused}
         />
       </div>
 
       <div
         className={cn(
-          "absolute right-4 bottom-4 flex items-center gap-2 transition duration-500",
+          "absolute right-4 bottom-4 flex items-center gap-2 transition duration-500 ease-in-out",
           isInactive ? "pointer-events-none opacity-0" : "opacity-100",
         )}
       >
@@ -210,6 +222,7 @@ export function FloatingButtons() {
             icon={<Heart />}
             iconWidth={40}
             expandable={false}
+            setPaused={setPaused}
           />
         </CustomDialog>
 
@@ -218,6 +231,7 @@ export function FloatingButtons() {
           onClick={() => setSettingsOpen(true)}
           icon={<Settings2 />}
           label="Settings"
+          setPaused={setPaused}
         />
 
         <SettingsSheet open={settingsOpen} onOpenChange={setSettingsOpen} />
@@ -226,6 +240,7 @@ export function FloatingButtons() {
           icon={isFullscreen ? <Minimize2 /> : <Maximize2 />}
           label={isFullscreen ? "Exit" : "Fullscreen"}
           onClick={toggleFullscreen}
+          setPaused={setPaused}
         />
       </div>
     </>

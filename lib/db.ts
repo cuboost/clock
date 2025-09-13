@@ -74,13 +74,21 @@ export interface ClockSettings {
   dateSize: number;
 }
 
+export interface Note {
+  id: string;
+  content: string;
+  updatedAt: number;
+}
+
 class ClockAppDB extends Dexie {
   settings!: Table<ClockSettings, string>;
+  note!: Table<Note, string>;
 
   constructor() {
     super("ClockAppDB");
-    this.version(1).stores({
+    this.version(2).stores({
       settings: "id",
+      note: "id",
     });
   }
 }
