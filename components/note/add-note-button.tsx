@@ -22,7 +22,7 @@ export default function AddNoteButton({
     <>
       {note && (
         <div className="relative! mt-2">
-          <h3 className="max-w-[75vw] overflow-hidden px-6 font-semibold text-wrap">
+          <h3 className="max-w-[75vw] overflow-hidden px-6 font-semibold">
             {note}
           </h3>
           {!editingNote && (
