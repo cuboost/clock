@@ -2,15 +2,20 @@
 
 import { useClockSettings } from "@/context/clock-settings-context";
 import { useClock } from "@/hooks/use-clock";
+import { useInactivity } from "@/hooks/use-inactivity";
 import { useTabTitle } from "@/hooks/use-tab-title";
 import { useThemeColor } from "@/hooks/use-theme-color";
 import { positionClasses } from "@/lib/clock-positions";
 import { cn } from "@/lib/utils";
 import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useRef } from "react";
+import AddNoteButton from "../note/add-note-button";
+import { FloatingButtons } from "../home/floating-buttons";
+import { useNote } from "@/hooks/use-note";
 
 export function ClockDisplay() {
   const time = useClock();
+  const { note } = useNote();
   const { settings, loading, updateSetting } = useClockSettings();
   const clockColor = useThemeColor("clock");
   const formattedDate = time.toLocaleDateString("en-US", {
@@ -74,85 +79,103 @@ export function ClockDisplay() {
     });
   };
 
+  const { isInactive, setPaused } = useInactivity({ timeout: 1000 });
+
   if (loading) return null;
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "relative h-full w-full transition-all duration-300",
-        settings.clockPosition.preset !== "custom" &&
-          "flex " + positionClasses[settings.clockPosition.preset],
-      )}
-    >
-      <motion.div
-        ref={clockRef}
-        drag={settings.clockPosition.preset === "custom"}
-        dragConstraints={containerRef}
-        dragMomentum={false}
-        dragElastic={0.5}
-        onDragEnd={handleDragEnd}
-        layout
-        style={{
-          x,
-          y,
-          color: clockColor,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: settings.clockPosition.preset === "custom" ? 100 : 300,
-          damping: 20,
-        }}
-        className={cn(
-          "flex h-fit flex-col items-center justify-center gap-2 p-2",
-          settings.clockPosition.preset === "custom"
-            ? "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing"
-            : "",
-        )}
-      >
-        <h1
-          className="flex items-center justify-center tracking-widest tabular-nums select-none"
-          style={{
-            fontSize: settings.clockSize,
-            fontFamily: settings.clockFontFamily,
-          }}
-        >
-          {settings.twelveHourFormat ? time.amPmHours : time.hours}:
-          {time.minutes}
-          {settings.showSeconds &&
-            !(settings.AmPmUnderSeconds && settings.showAmPm) &&
-            `:${time.seconds}`}
-          {settings.showAmPm && !settings.AmPmUnderSeconds && ` ${time.amPm}`}
-          {settings.showAmPm && settings.AmPmUnderSeconds && (
-            <div
-              className={cn(
-                "flex h-full flex-col leading-none",
-                settings.AmPmUnderSeconds &&
-                  settings.showSeconds &&
-                  "text-[40%]",
-              )}
-              style={{
-                marginLeft: `calc(${settings.clockSize}rem * 0.013)`,
-              }}
-            >
-              {settings.showSeconds && <span>{time.seconds}</span>}
-              <span>{time.amPm}</span>
-            </div>
+    <>
+      <div className="relative flex h-full w-full flex-col items-center justify-center px-2 py-10 text-center md:p-10">
+        <div
+          ref={containerRef}
+          className={cn(
+            "relative h-full w-full transition-all duration-300",
+            note !== ""
+              ? "flex " + positionClasses["center"]
+              : settings.clockPosition.preset !== "custom" &&
+                  "flex " + positionClasses[settings.clockPosition.preset],
           )}
-        </h1>
-
-        {settings.showDate && (
-          <h2
-            className="tracking-wider select-none"
+        >
+          <motion.div
+            ref={clockRef}
+            drag={settings.clockPosition.preset === "custom"}
+            dragConstraints={containerRef}
+            dragMomentum={false}
+            dragElastic={0.5}
+            onDragEnd={handleDragEnd}
+            layout
             style={{
-              fontSize: settings.dateSize,
-              fontFamily: settings.dateFontFamily,
+              x,
+              y,
+              color: clockColor,
             }}
+            transition={{
+              type: "spring",
+              stiffness: settings.clockPosition.preset === "custom" ? 100 : 300,
+              damping: 20,
+            }}
+            className={cn(
+              "flex h-fit flex-col items-center justify-center gap-2 p-2",
+              settings.clockPosition.preset === "custom"
+                ? "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing"
+                : "",
+            )}
           >
-            {displayDate}
-          </h2>
-        )}
-      </motion.div>
-    </div>
+            <div className="relative flex flex-col items-center justify-center gap-2">
+              <h1
+                className="flex items-center justify-center tracking-widest tabular-nums select-none"
+                style={{
+                  fontSize: settings.clockSize,
+                  fontFamily: settings.clockFontFamily,
+                }}
+              >
+                {settings.twelveHourFormat ? time.amPmHours : time.hours}:
+                {time.minutes}
+                {settings.showSeconds &&
+                  !(settings.AmPmUnderSeconds && settings.showAmPm) &&
+                  `:${time.seconds}`}
+                {settings.showAmPm &&
+                  !settings.AmPmUnderSeconds &&
+                  ` ${time.amPm}`}
+                {settings.showAmPm && settings.AmPmUnderSeconds && (
+                  <div
+                    className={cn(
+                      "flex h-full flex-col leading-none",
+                      settings.AmPmUnderSeconds &&
+                        settings.showSeconds &&
+                        "text-[40%]",
+                    )}
+                    style={{
+                      marginLeft: `calc(${settings.clockSize}rem * 0.013)`,
+                    }}
+                  >
+                    {settings.showSeconds && <span>{time.seconds}</span>}
+                    <span>{time.amPm}</span>
+                  </div>
+                )}
+              </h1>
+
+              {settings.showDate && (
+                <h2
+                  className="tracking-wider select-none"
+                  style={{
+                    fontSize: settings.dateSize,
+                    fontFamily: settings.dateFontFamily,
+                  }}
+                >
+                  {displayDate}
+                </h2>
+              )}
+
+              <AddNoteButton
+                isInactive={isInactive}
+                setInactivityPaused={setPaused}
+              />
+            </div>
+          </motion.div>
+        </div>
+        <FloatingButtons />
+      </div>
+    </>
   );
 }

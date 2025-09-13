@@ -17,9 +17,11 @@ import {
 import { ColorInput } from "../ui/color-input";
 import { SettingsSection } from "../ui/settings-section";
 import { SliderInput } from "../ui/slider-input";
+import { useNote } from "@/hooks/use-note";
 
 export function ClockAppearanceSection() {
   const { settings, updateSetting } = useClockSettings();
+  const { note } = useNote();
   const clockPositions = Object.keys(positionClasses) as ClockPositionType[];
   const axes = ["x", "y"] as const;
 
@@ -69,7 +71,13 @@ export function ClockAppearanceSection() {
       />
       <div className="grid gap-3">
         <Label htmlFor="clock-position">Position</Label>
+        {note !== "" && (
+          <p className="text-muted-foreground text-xs">
+            Cannot change position when a note is present.
+          </p>
+        )}
         <Select
+          disabled={note !== ""}
           value={settings.clockPosition.preset}
           onValueChange={(value) => {
             if (value === "custom") {

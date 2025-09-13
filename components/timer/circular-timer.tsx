@@ -105,10 +105,7 @@ export function CircularTimer({
   );
 
   return (
-    <motion.div
-      transition={{
-        type: "spring",
-      }}
+    <div
       className="relative flex flex-col items-center select-none"
       onClick={() => {
         if (!isEditing) {
@@ -116,7 +113,7 @@ export function CircularTimer({
         }
       }}
     >
-      <motion.svg
+      <svg
         width={svgSize}
         height={svgSize}
         className="-rotate-90 transform"
@@ -130,19 +127,19 @@ export function CircularTimer({
           cx={svgSize / 2}
           cy={svgSize / 2}
         />
-        <circle
+        <motion.circle
           stroke={running ? "var(--primary)" : "var(--muted-foreground)"}
           fill="transparent"
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
-          strokeDashoffset={circumference - progress}
           r={radius}
           cx={svgSize / 2}
           cy={svgSize / 2}
           strokeLinecap="round"
-          style={{ transition: "stroke-dashoffset 0.2s linear" }}
+          animate={{ strokeDashoffset: circumference - progress }}
+          transition={{ duration: 0.2, ease: "linear" }}
         />
-      </motion.svg>
+      </svg>
       <div
         className={cn(
           "absolute top-1/2 flex h-full -translate-y-1/2 flex-col justify-evenly py-5 tabular-nums select-none",
@@ -181,6 +178,6 @@ export function CircularTimer({
           {endTime}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
