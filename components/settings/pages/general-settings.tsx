@@ -26,6 +26,12 @@ export function GeneralSettings() {
           checked={settings.showDate}
           onChange={(value) => updateSetting("showDate", value)}
         />
+        <SwitchInput
+          id="show-add-note"
+          label="Add Note"
+          checked={settings.showAddNote}
+          onChange={(value) => updateSetting("showAddNote", value)}
+        />
       </SettingsSection>
 
       <SettingsSection title="Time Format">

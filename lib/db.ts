@@ -72,6 +72,7 @@ export interface ClockSettings {
   // clockFontWeight: string;
   clockSize: number;
   dateSize: number;
+  showAddNote: boolean;
 }
 
 export interface Note {

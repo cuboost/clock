@@ -29,6 +29,7 @@ export const DEFAULT_SETTINGS: ClockSettings = {
   dateSize: 25,
   clockFontFamily: "",
   dateFontFamily: "",
+  showAddNote: true,
 };
 
 type ClockSettingsContextType = {

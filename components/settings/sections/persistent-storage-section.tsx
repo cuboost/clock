@@ -47,7 +47,7 @@ export function PersistentStorageSection() {
   return (
     <SettingsSection
       title="Persist Settings"
-      description="Ask your browser to save your settings permanently."
+      description="Ask your browser to save your settings permanently (works for Firefox)."
     >
       <Button variant="outline" onClick={enablePersistence}>
         Enable Persistent Storage
