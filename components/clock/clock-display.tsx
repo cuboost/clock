@@ -167,12 +167,13 @@ export function ClockDisplay() {
                 </h2>
               )}
 
-              {settings.showAddNote && (
-                <AddNoteButton
-                  isInactive={isInactive}
-                  setInactivityPaused={setPaused}
-                />
-              )}
+              {settings.showAddNote &&
+                settings.clockPosition.preset === "center" && (
+                  <AddNoteButton
+                    isInactive={isInactive}
+                    setInactivityPaused={setPaused}
+                  />
+                )}
             </div>
           </motion.div>
         </div>

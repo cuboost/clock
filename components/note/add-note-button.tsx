@@ -62,7 +62,7 @@ export default function AddNoteButton({
             });
           }}
           className={cn(
-            "absolute -bottom-11 transition duration-500 ease-in-out",
+            "absolute -bottom-14 transition duration-500 ease-in-out",
             isInactive ? "pointer-events-none opacity-0" : "opacity-100",
           )}
         >

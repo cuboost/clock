@@ -48,17 +48,19 @@ export function TimerControls({
         </Button>
       </div>
 
-      <div className="flex gap-2">
-        {PRESETS.map((preset) => (
-          <Button
-            key={preset.label}
-            variant="outline"
-            onClick={() => setDuration(preset.seconds)}
-          >
-            {preset.label}
-          </Button>
-        ))}
-      </div>
+      {!running && (
+        <div className="flex gap-2">
+          {PRESETS.map((preset) => (
+            <Button
+              key={preset.label}
+              variant="outline"
+              onClick={() => setDuration(preset.seconds)}
+            >
+              {preset.label}
+            </Button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

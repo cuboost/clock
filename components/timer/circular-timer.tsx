@@ -22,6 +22,7 @@ interface CircularTimerProps {
   startTimer: () => void;
   setTimer: (seconds: number) => void;
   running: boolean;
+  fullscreen: boolean;
 }
 
 export function CircularTimer({
@@ -33,13 +34,13 @@ export function CircularTimer({
   duration,
   setTimer,
   running,
+  fullscreen,
 }: CircularTimerProps) {
-  const [largeMode, setLargeMode] = useState(false);
   const [isEditing, setIsEditing] = useState(true);
   const [inputValue, setInputValue] = useState("00:05:00");
 
-  const radius = useMemo(() => (largeMode ? 200 : 130), [largeMode]);
-  const strokeWidth = useMemo(() => (largeMode ? 15 : 11), [largeMode]);
+  const radius = useMemo(() => (fullscreen ? 200 : 130), [fullscreen]);
+  const strokeWidth = useMemo(() => (fullscreen ? 15 : 11), [fullscreen]);
   const svgSize = useMemo(() => radius * 2 + 40, [radius]);
   const circumference = useMemo(() => 2 * Math.PI * radius, [radius]);
 
@@ -105,19 +106,12 @@ export function CircularTimer({
   );
 
   return (
-    <div
-      className="relative flex flex-col items-center select-none"
-      onClick={() => {
-        if (!isEditing) {
-          setLargeMode(!largeMode);
-        }
-      }}
-    >
+    <div className="relative flex flex-col items-center select-none">
       <svg
         width={svgSize}
         height={svgSize}
         className="-rotate-90 transform"
-        style={largeMode ? { width: "100%", height: "100%" } : {}}
+        style={fullscreen ? { width: "100%", height: "100%" } : {}}
       >
         <circle
           stroke="var(--muted)"
