@@ -58,6 +58,7 @@ export function useTimer(initialSeconds = 60, onComplete?: () => void) {
     setRunning(false);
   }, [stopRAF]);
 
+  // Used for presets or resetting timer duration completely
   const setDuration = useCallback(
     (seconds: number) => {
       stopRAF();
@@ -67,6 +68,17 @@ export function useTimer(initialSeconds = 60, onComplete?: () => void) {
       setRunning(false);
     },
     [stopRAF],
+  );
+
+  const addTime = useCallback(
+    (extraSeconds: number) => {
+      if (running && endTimeRef.current) {
+        endTimeRef.current += extraSeconds * 1000;
+      }
+      setSecondsLeft((prev) => prev + extraSeconds);
+      setPreciseSecondsLeft((prev) => prev + extraSeconds);
+    },
+    [running],
   );
 
   useEffect(() => {
@@ -83,5 +95,6 @@ export function useTimer(initialSeconds = 60, onComplete?: () => void) {
     pause,
     reset,
     setDuration,
+    addTime,
   };
 }

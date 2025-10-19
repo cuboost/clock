@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Play, Pause, RotateCcw } from "lucide-react";
+import { Pause, Play, RotateCcw } from "lucide-react";
 
 interface TimerControlsProps {
   running: boolean;
   start: () => void;
   pause: () => void;
   reset: () => void;
+  addTime: (extraSeconds: number) => void;
   setDuration: (seconds: number) => void;
   duration: number;
   secondsLeft: number;
@@ -20,6 +21,12 @@ const PRESETS = [
   { label: "10 min", seconds: 600 },
 ];
 
+const INCREMENTS = [
+  { label: "+ 15s", seconds: 15 },
+  { label: "+ 30s", seconds: 30 },
+  { label: "+ 60s", seconds: 60 },
+];
+
 export function TimerControls({
   running,
   start,
@@ -29,6 +36,7 @@ export function TimerControls({
   duration,
   secondsLeft,
   fullscreen,
+  addTime,
 }: TimerControlsProps) {
   return (
     <div className="flex flex-col items-center gap-4">
@@ -51,20 +59,29 @@ export function TimerControls({
         </Button>
       </div>
 
-      {!running && (
-        <div className="flex gap-2">
-          {PRESETS.map((preset) => (
-            <Button
-              key={preset.label}
-              variant="outline"
-              size={fullscreen ? "lg" : "sm"}
-              onClick={() => setDuration(preset.seconds)}
-            >
-              {preset.label}
-            </Button>
-          ))}
-        </div>
-      )}
+      <div className="flex gap-2">
+        {!running
+          ? PRESETS.map((preset) => (
+              <Button
+                key={preset.label}
+                variant="outline"
+                size={fullscreen ? "lg" : "sm"}
+                onClick={() => setDuration(preset.seconds)}
+              >
+                {preset.label}
+              </Button>
+            ))
+          : INCREMENTS.map((inc) => (
+              <Button
+                key={inc.label}
+                variant="outline"
+                size={fullscreen ? "lg" : "sm"}
+                onClick={() => addTime(inc.seconds)}
+              >
+                {inc.label}
+              </Button>
+            ))}
+      </div>
     </div>
   );
 }

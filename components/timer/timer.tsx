@@ -54,6 +54,7 @@ export function Timer({
     preciseSecondsLeft,
     secondsLeft,
     milliseconds,
+    addTime,
   } = useTimer(initialSeconds, () => {
     if (!beepedRef.current) {
       playBeep();
@@ -116,6 +117,7 @@ export function Timer({
         duration={duration}
         secondsLeft={secondsLeft}
         fullscreen={fullscreen}
+        addTime={addTime}
       />
     </div>
   );
