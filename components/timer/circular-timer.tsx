@@ -140,7 +140,9 @@ export function CircularTimer({
           running ? "text-primary" : "text-muted-foreground",
         )}
       >
-        {formatDuration(duration)}
+        <span className={fullscreen ? "text-xl" : ""}>
+          {formatDuration(duration)}
+        </span>
         {isEditing ? (
           <Input
             type="text"
@@ -149,12 +151,18 @@ export function CircularTimer({
             onChange={onChange}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
-            className="border-none! bg-transparent! p-0 text-center text-4xl! font-bold tabular-nums shadow-none! focus-visible:border-none! focus-visible:ring-0!"
+            className={cn(
+              "flex items-center justify-center border-none! bg-transparent! p-0! text-center leading-none! font-bold tabular-nums shadow-none! focus-visible:border-none! focus-visible:ring-0!",
+              fullscreen ? "h-14 text-6xl!" : "text-4xl!",
+            )}
             autoFocus
           />
         ) : (
           <span
-            className="cursor-pointer text-4xl leading-9! font-bold"
+            className={cn(
+              "flex cursor-pointer items-center justify-center leading-9! font-bold",
+              fullscreen ? "h-14 text-6xl" : "text-4xl",
+            )}
             tabIndex={0}
             onClick={handleFocus}
             onFocus={handleFocus}
@@ -167,8 +175,13 @@ export function CircularTimer({
             )}
           </span>
         )}
-        <div className="flex items-center justify-center gap-1">
-          <Bell className="h-4 w-4" />
+        <div
+          className={cn(
+            "flex items-center justify-center",
+            fullscreen ? "gap-2 text-xl" : "gap-1",
+          )}
+        >
+          <Bell className={fullscreen ? "h-5 w-5" : "h-4 w-4"} />
           {endTime}
         </div>
       </div>

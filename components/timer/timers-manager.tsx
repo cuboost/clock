@@ -9,7 +9,7 @@ let timerId = 1;
 
 export function TimersManager() {
   const [timers, setTimers] = useState([{ id: timerId }]);
-  const [fullscreen, setFullscreen] = useState(false);
+  const [fullscreen, setFullscreen] = useState(true);
 
   const addTimer = useCallback(() => {
     timerId += 1;

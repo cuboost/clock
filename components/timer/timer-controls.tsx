@@ -11,6 +11,7 @@ interface TimerControlsProps {
   setDuration: (seconds: number) => void;
   duration: number;
   secondsLeft: number;
+  fullscreen: boolean;
 }
 
 const PRESETS = [
@@ -27,6 +28,7 @@ export function TimerControls({
   setDuration,
   duration,
   secondsLeft,
+  fullscreen,
 }: TimerControlsProps) {
   return (
     <div className="flex flex-col items-center gap-4">
@@ -34,6 +36,7 @@ export function TimerControls({
         <Button
           onClick={running ? pause : start}
           variant="default"
+          size={fullscreen ? "lg" : "sm"}
           aria-label={running ? "Pause timer" : "Start timer"}
         >
           {running ? (
@@ -54,6 +57,7 @@ export function TimerControls({
             <Button
               key={preset.label}
               variant="outline"
+              size={fullscreen ? "lg" : "sm"}
               onClick={() => setDuration(preset.seconds)}
             >
               {preset.label}

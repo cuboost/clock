@@ -115,6 +115,7 @@ export function Timer({
         setDuration={setDuration}
         duration={duration}
         secondsLeft={secondsLeft}
+        fullscreen={fullscreen}
       />
     </div>
   );
